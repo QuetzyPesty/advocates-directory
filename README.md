@@ -19,15 +19,21 @@ private notes and must not be reachable from the network.
 `npm run build` is destructive — it recreates `db/directory.sqlite` from
 `db/*.sql` and reloads every dataset in `data/`.
 
-The directory currently holds **535 people**:
+The directory currently holds **4,463 people**:
 
 | Source | People | Standing |
 |---|---|---|
+| Supreme Court roll of Advocates-on-Record | 3,928 | `bar_verified` — the Registry's own list |
 | Law firm partners from the deal-coverage database | 433 | `source_backed` — each cites the Bar & Bench reports naming them |
-| Supreme Court advocates researched from public sources | 55 | `source_backed` — in two batches, `data/sc-advocates.json` and `data/sc-advocates-batch2.json` |
+| Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` |
 | NLS alumni list | 47 | `unverified` — a personal list, not a checked source |
 
-Plus 48 firms and chambers, 146 reported transactions, and 3,399 relationships.
+Plus 48 firms and chambers, 146 reported transactions, and 3,453 relationships —
+of which 54 come from the daily cause lists and grow every sitting day.
+
+Most of the roll is a name, a registration year and a cause-list code: the spine
+everything else joins onto, not a profile. `npm run export -- --substantive`
+leaves those out, which is what makes a shareable file 2 MB rather than 7.
 
 ## Private by design
 
@@ -119,6 +125,116 @@ bring the whole ladder in.
 
 It prints a review log and writes it to `_review` in the output JSON. Read it
 before importing.
+
+## The Supreme Court roll
+
+```bash
+npm run convert:aor
+npm run import -- data/aor-list.json
+```
+
+`scripts/convert-aor-list.js` finds the current "List of Advocates-on-Record" on
+[sci.gov.in](https://www.sci.gov.in/advocate-on-record/), downloads it, and
+parses it. The URL carries the list's publication date and changes every time
+the Registry reissues it, so the link is discovered from the page rather than
+hard-coded.
+
+The PDF is 543 pages of subsetted TrueType fonts where byte `0x01` means "a".
+`scripts/lib/pdf-text.js` reads each font's `/ToUnicode` CMap to decode it — no
+`pdftotext`, no dependency. It reports what share of characters resolved, and
+the converter refuses to parse anything below 90% rather than importing
+mojibake.
+
+From each row it takes the name, the registration date (`aor_year`), the
+registration number, the **cause-list code** (`aor_code` — the join key to the
+daily lists), and the remarks column, which is where the real value hides:
+
+| Remarks column says | Becomes |
+|---|---|
+| `Designated as Sr. Advocate w.e.f. 20/04/1998` | `senior_advocate_aor`, `senior_designated_year: 1998`, designated by the Supreme Court |
+| `Expired on 4.2.2011` | `status: deceased` |
+| `Elevated to the Bench of Delhi High Court` | `status: on_bench` |
+| `Removed at his own request` | `status: inactive` |
+| `Name changed on her request from …` | kept verbatim as a note |
+
+223 Senior Advocate designations and 3,570 cause-list codes come out of that one
+column.
+
+**Chamber addresses, phone numbers and emails are imported as private
+contacts.** The Court publishes them; a file you email to someone should not
+carry them. The exporter only ships `is_public` contacts, and nothing on the
+roll is marked public — so a shared export contains none of them. That is
+checked, not assumed.
+
+Not in the roll, and therefore left empty: practice area, education, Bar
+Council, year of enrolment at the Bar. Honorifics are dropped too — `Sh.`/`Smt.`
+encode something the schema does not model.
+
+## Daily cause lists
+
+```bash
+npm run scrape:causelist          # today's lists
+npm run derive:causelist          # rebuild the overlay from everything collected
+```
+
+This is the part that compounds. A cause list names, for every item: the case,
+the Bench, and the advocate on record for each party — `NEHA RATHI [R-1], [R-5]`.
+That tag is the whole point. Nothing else in the public record says who acted
+for whom, before whom, on what day.
+
+`scripts/scrape-cause-list.js` discovers the day's PDFs from
+[the cause-list page](https://www.sci.gov.in/cause-list/), parses each, and
+writes one gzipped JSON Lines file per day to `data/cause-lists/`. About 37 KB a
+day — a year is under 10 MB, which matters when a scheduled job commits them
+forever. Re-running a day is byte-identical, so a retry produces no diff.
+
+Names are matched against the AoR roll rather than delimited by punctuation:
+the cause list names AoRs, and the roll *is* the list of AoRs. That gets ~90%
+of tagged appearances onto a person. The rest are mostly AoR **firms** — "M/s
+Parekh & Co" files under the firm's name — and are reported, never guessed at.
+Where a name matches two people on the roll, both slugs are carried and neither
+is assigned.
+
+`scripts/derive-cause-lists.js` rebuilds `data/cause-list-derived.json` from the
+whole archive:
+
+- **Court practice, measured** — `Listed in 132 matters across 4 of 4 cause
+  lists, before 14 Benches.` `frequency` follows the count: `primary` at 20+
+  listings, `regular` at 5+.
+- **`co_counsel_with`** — same side of the same item, 3+ times.
+- **`opposed`** — opposite sides, 4+ times.
+
+The thresholds matter: two AoRs land in the same matter constantly, so a single
+shared listing is a coincidence. Everything cut is counted in `_review`.
+
+A cause list records who is **on record** that day. It does not say the matter
+was reached, or who stood up, and no seniority or mentorship is inferred from
+any edge here.
+
+### Running it on a schedule
+
+Two GitHub Actions workflows, both committing back to the branch:
+
+| Workflow | When | What |
+|---|---|---|
+| `.github/workflows/cause-list.yml` | 03:30 UTC, Mon–Fri | Scrape the day's lists, rebuild the overlay, verify the database still builds, commit |
+| `.github/workflows/aor-roll.yml` | 04:00 UTC, 1st of the month | Re-fetch the roll — a stale roll silently lowers the cause-list match rate rather than failing |
+
+Both take `workflow_dispatch`, and the cause-list one accepts a date, so a
+missed day can be backfilled from the Actions tab. Neither installs anything:
+the project has no dependencies, so there is no `npm ci` and no cache. A
+non-sitting day produces no commit, which is a normal outcome rather than a
+failure.
+
+To use them, push this repository to GitHub:
+
+```bash
+git remote add origin git@github.com:<you>/<repo>.git
+git push -u origin main
+```
+
+Then Settings → Actions → General → Workflow permissions → **Read and write**,
+which is what lets the job commit the day's data.
 
 ## Ways in
 
@@ -222,7 +338,7 @@ Notes are never included in API output.
 npm run export
 ```
 
-Produces **`dist/index.html`: one self-contained file**, ~1.9 MB, no dependencies
+Produces **`dist/index.html`: one self-contained file**, ~2 MB, no dependencies
 and no network requests. Browse, facets, search, profiles and the relationship
 graph all run client-side. Open it with `file://`, email it, or drop it on any
 static host.
@@ -232,6 +348,7 @@ static host.
 | `--out=share.html` | write somewhere else |
 | `--title="…"` | page title and heading |
 | `--verified-only` | drop records with no cited source — the safest thing to share |
+| `--substantive` | drop bare roll entries — a name and a registration number and nothing else |
 | `--include-notes` | **ships your private notes in plain text**. Off by default; the script warns loudly when you use it. |
 
 Private notes are excluded by default and the exporter proves it — the embedded
@@ -277,6 +394,13 @@ db/02-taxonomy.sql      Courts, practice areas, law schools, Bar Councils,
 data/nls-alumni.json    Generated from the RTF by the converter.
 data/firm-partners.json 433 law firm partners, 37 firms and 146 reported
                         transactions, generated from the deal-coverage database.
+data/aor-list.json      3,928 Advocates-on-Record, parsed from the Registry's
+                        own list. The spine everything else joins to.
+data/cause-lists/       One gzipped JSONL file per sitting day. Append-only.
+data/cause-list-derived.json
+                        Court practice and co-appearance, rebuilt from the
+                        archive on every run. A merge overlay, not a record
+                        of truth — regenerate rather than edit.
 data/sc-advocates.json  25 Supreme Court advocates, researched from public
 data/sc-advocates-batch2.json
                         sources; every record cites at least one URL. Batch 2
@@ -286,6 +410,11 @@ scripts/build-db.js         Rebuild from scratch.
 scripts/import-json.js      Idempotent bulk import, upserting on slug.
 scripts/convert-nls-rtf.js  RTF alumni list -> import JSON, with a review log.
 scripts/convert-firm-db.js  Deal-coverage SQLite -> import JSON (partner level).
+scripts/convert-aor-list.js Supreme Court AoR roll (PDF) -> import JSON.
+scripts/scrape-cause-list.js  Daily cause lists -> one JSONL file per day.
+scripts/derive-cause-lists.js Archive -> measured court practice + co-appearance.
+scripts/lib/pdf-text.js     Dependency-free PDF text extraction via ToUnicode.
+scripts/lib/cause-list.js   Cause-list grammar and name resolution.
 scripts/export-static.js    One-file static export for sharing.
 src/screen.js           The screener engine + browse dimensions.
 src/profile.js          Profile assembly + graph traversal.

@@ -314,6 +314,28 @@ Deliberate limits, mirroring the NLS converter:
 Practice-area tags map onto six slugs, one of which — `private-equity-vc` — this
 import added to `db/02-taxonomy.sql`.
 
+## Merge overlays
+
+A normal import file **owns** the people it names: every scalar is written and
+every child collection is replaced, so the file is the record of truth. That is
+wrong for a file carrying only part of a record. `data/cause-list-derived.json`
+says nothing but "this person was listed in the Supreme Court N times"; imported
+normally it would blank their name and delete their practice areas.
+
+Set `"_merge": true` at the top level (or pass `--merge`) and the import only
+touches what the record actually contains:
+
+- a scalar absent from the record is left alone, not set to `NULL`;
+- a child collection absent from the record is not wiped — supplying `courts`
+  cannot delete someone's `affiliations`;
+- existing `source` links survive, since an overlay adds provenance rather than
+  replacing the provenance behind facts it never touched;
+- a record with no `full_name` whose slug is not already in the directory is
+  skipped and reported, rather than failing on `NOT NULL`.
+
+Derived files declare `_merge` themselves so `npm run build` does the right
+thing without a flag.
+
 ## Extending the taxonomy
 
 Courts, practice areas, institutions, Bar Councils, languages and relationship
