@@ -143,9 +143,18 @@ all.sort((a, b) => (a.list || '').localeCompare(b.list || '')
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 const outFile = path.join(OUT_DIR, `${target}.jsonl.gz`);
-// mtime 0 so the gzip header does not change between runs of identical data.
-fs.writeFileSync(outFile, zlib.gzipSync(
-  Buffer.from(all.map(a => JSON.stringify(a)).join('\n') + '\n'), { level: 9, mtime: 0 }));
+
+// The output has to be byte-identical for identical input, or the scheduled job
+// commits a no-op every day. Two header fields defeat that on their own:
+// the timestamp, which `mtime: 0` pins, and byte 9 — the OS code — which zlib
+// fills in from the host: 0x13 on macOS, 0x03 on Linux. A file written on a
+// laptop and rewritten by the Linux runner then differs in exactly one byte
+// while the content is identical. Pin it to 0xFF, "unknown", which is what this
+// is: a deliberately host-independent artefact.
+const gz = zlib.gzipSync(
+  Buffer.from(all.map(a => JSON.stringify(a)).join('\n') + '\n'), { level: 9, mtime: 0 });
+gz[9] = 0xff;
+fs.writeFileSync(outFile, gz);
 
 const rate = tagged ? (100 * matched / tagged).toFixed(1) : '0.0';
 console.log(`${path.relative(ROOT, outFile)}`);
