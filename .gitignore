@@ -14,3 +14,8 @@ db/sources/
 node_modules/
 .DS_Store
 *.log
+
+# Local-only overlays: contact details off the AoR roll and anything else that
+# should not be republished by a public repository. Regenerate with the
+# converter that wrote them.
+data/private/

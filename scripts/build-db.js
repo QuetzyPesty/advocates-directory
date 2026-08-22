@@ -34,10 +34,19 @@ if (!empty) {
   const dir = path.join(ROOT, 'data');
   const files = fs.existsSync(dir)
     ? fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'import-template.json').sort()
+        .map(f => path.join(dir, f))
+    : [];
+  // data/private/ holds overlays that are deliberately not committed — contact
+  // details off the AoR roll, for one. They are part of a local build and
+  // absent from a clone, so their absence is normal, not an error.
+  const privateDir = path.join(dir, 'private');
+  const privateFiles = fs.existsSync(privateDir)
+    ? fs.readdirSync(privateDir).filter(f => f.endsWith('.json')).sort()
+        .map(f => path.join(privateDir, f))
     : [];
   if (!files.length) console.log('no datasets in data/ — database is empty');
   const load = f => execFileSync(process.execPath,
-    [path.join(ROOT, 'scripts', 'import-json.js'), path.join(dir, f)], { stdio: 'inherit' });
+    [path.join(ROOT, 'scripts', 'import-json.js'), f], { stdio: 'inherit' });
 
   for (const f of files) load(f);
 
@@ -48,6 +57,14 @@ if (!empty) {
   if (files.length > 1) {
     console.log(`\nSecond pass — resolving relationships that cross datasets:`);
     for (const f of files) load(f);
+  }
+
+  // Overlays go last, after every owning file has had its final say. A normal
+  // import replaces the child rows it owns, so loading these earlier would let
+  // the second pass wipe them straight back out.
+  if (privateFiles.length) {
+    console.log(`\nLocal-only overlays (data/private/, not committed):`);
+    for (const f of privateFiles) load(f);
   }
 }
 

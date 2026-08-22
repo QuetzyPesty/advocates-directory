@@ -6,6 +6,7 @@
 //   npm run convert:aor -- --pdf=local.pdf    # parse a copy already on disk
 //   npm run convert:aor -- --out=data/aor.json --keep-pdf=db/sources/aor.pdf
 //   npm run convert:aor -- --skip-inactive    # drop expired / removed entries
+//   npm run convert:aor -- --inline-contacts  # put contacts back in the main file
 //
 // The list is the Registry's own roll: every advocate entitled to file in the
 // Supreme Court, with the date they were registered, their registration number,
@@ -18,14 +19,22 @@
 //
 // What it does not do: invent anything the list does not say. There is no
 // practice area, no education, no Bar Council in this document, so those fields
-// come out empty. Chamber addresses, phone numbers and emails are imported as
-// PRIVATE contacts — they are published by the Court, but a shared export
-// should not carry them, and `is_public: false` is what keeps them out.
+// come out empty.
+//
+// CONTACTS ARE SPLIT OUT. The roll carries a chamber address, a phone number
+// and an email for most entries. `is_public: false` keeps those out of any
+// HTML export, but that flag means nothing to git, and data/aor-list.json is a
+// committed file. So contacts go to a separate merge overlay under
+// data/private/, which .gitignore excludes: the repository can be public
+// without republishing a grep-able copy of the Bar's contact details, while a
+// local build still has them. --inline-contacts restores the old behaviour.
 // ============================================================================
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { extractText } from './lib/pdf-text.js';
+
+const ROOT_DIR = path.resolve(import.meta.dirname, '..');
 
 const argv = process.argv.slice(2);
 const flag = n => argv.includes(`--${n}`);
@@ -38,6 +47,8 @@ const OUT = opt('out', 'data/aor-list.json');
 const PDF_IN = opt('pdf', null);
 const KEEP_PDF = opt('keep-pdf', null);
 const SKIP_INACTIVE = flag('skip-inactive');
+const INLINE_CONTACTS = flag('inline-contacts');
+const CONTACTS_OUT = opt('contacts-out', 'data/private/aor-contacts.json');
 const INDEX_URL = 'https://www.sci.gov.in/advocate-on-record/';
 const UA = 'advocates-directory/0.1 (personal research; contact via repository owner)';
 
@@ -94,7 +105,11 @@ const lines = parsed.text.split('\n').map(l => l.trim());
 
 // --- grammar ----------------------------------------------------------------
 
-const TITLE = /^(Sh|Smt|Ms|Mr|Mrs|Dr|Km|Kum|Miss|Prof|Justice)\.?$/i;
+// Every title the roll actually uses, counted off the extracted text rather
+// than assumed. "Shri" appears 75 times and its absence here silently merged
+// each of those rows into the row above.
+const TITLE = /^(Sh|Shri|Smt|Ms|Mr|Mrs|Dr|Km|Kum|Kumari|Miss|Prof|Justice)\.?$/i;
+const TITLE_PREFIX = /^(Sh|Shri|Smt|Ms|Mr|Mrs|Dr|Km|Kum|Kumari|Miss|Prof|Justice)\.?\s+\S/i;
 const DATE = /^(\d{1,2})[/.\-](\d{1,2})[/.\-](\d{2,4})$/;
 const DIGITS = /^\d+$/;
 const NOISE = new Set([
@@ -111,8 +126,12 @@ function isEntryStart(i) {
   while (j < lines.length && isNoise(lines[j])) j++;
   const next = lines[j];
   if (!next || DIGITS.test(next) || DATE.test(next)) return false;
-  // Either a bare title line, or a name that already carries its title.
-  return TITLE.test(next) || /^(Mr|Ms|Mrs|Dr|Sh|Smt|Km|Kum|Prof|Justice)\.\s+\S/i.test(next)
+  // Either a bare title line, or a name that already carries its title. The
+  // full stop is optional: the roll writes both "Mr. Satish Kumar" and
+  // "Ms Kiran Bhardwaj", and requiring the dot silently swallowed the whole of
+  // every row of the second kind into the row above it — taking that row's
+  // cause-list code with it.
+  return TITLE.test(next) || TITLE_PREFIX.test(next)
       || /\((Advocate|Attorney)\)\s*$/i.test(next);
 }
 
@@ -123,6 +142,8 @@ note('entries found', `${starts.length} numbered entries across ${parsed.pages} 
 // --- per-entry parsing ------------------------------------------------------
 
 const EMAIL = /[\w][\w.+-]*@[\w-]+\.[\w.-]+/;
+const EMAIL_G = /[\w][\w.+-]*@[\w-]+\.[\w.-]+/g;
+const PHONE_G = /(?:\+?91[\s-]?)?\b[6-9]\d{9}\b|\b0\d{2,4}[\s-]?\d{6,8}\b/g;
 const PHONE = /(?:\+?91[\s-]?)?\b\d{10}\b|\b\d{5}[\s-]\d{5}\b|\b0\d{2,4}[\s-]?\d{6,8}\b/;
 
 const titleCase = s => s.replace(/\S+/g, w =>
@@ -145,8 +166,10 @@ function parseEntry(from, to) {
   const raw = lines.slice(from + 1, to).filter(l => !isNoise(l));
   if (!raw.length) return null;
 
+  // The title column is sometimes two lines — "Dr." then "(Ms)" — so consume a
+  // run of them rather than a single line, or the parenthetical becomes the name.
   let k = 0;
-  if (TITLE.test(raw[k])) k++;                  // bare title column
+  while (k < raw.length && (TITLE.test(raw[k]) || /^\((Ms|Mrs|Miss|Smt|Mr|Sh|Dr)\.?\)$/i.test(raw[k]))) k++;
   let name = raw[k++];
   if (!name) return null;
 
@@ -174,7 +197,7 @@ function parseEntry(from, to) {
     const glue = name.match(/\s(?=(?:Chamber|Ch\.|C\/o|Flat|House|No\.|Plot|Block)\b|\d+[,/\-])/i);
     if (glue && glue.index > 6) { spilled = name.slice(glue.index).trim(); name = name.slice(0, glue.index).trim(); }
   }
-  name = name.replace(/^(Sh|Smt|Ms|Mr|Mrs|Dr|Km|Kum|Miss|Prof)\.?\s+/i, '').trim();
+  name = name.replace(/^(Sh|Shri|Smt|Ms|Mr|Mrs|Dr|Km|Kum|Kumari|Miss|Prof)\.?\s+/i, '').trim();
   if (name === name.toUpperCase()) name = titleCase(name);
   if (!/[A-Za-z]/.test(name)) return null;
 
@@ -278,6 +301,8 @@ const source = { kind: 'court_record', title: sourceTitle, url: sourceUrl, retri
                  note: 'Supreme Court of India, Record Room — the Registry’s own roll of Advocates-on-Record.' };
 
 const people = [];
+const contactOverlay = [];
+let redacted = 0;
 const counts = { senior: 0, deceased: 0, inactive: 0, on_bench: 0, withCode: 0, withEmail: 0, skipped: 0 };
 const dupNames = new Map();
 for (const e of entries) dupNames.set(e.name, (dupNames.get(e.name) || 0) + 1);
@@ -298,7 +323,20 @@ for (const e of entries) {
                                   issuer: 'Supreme Court of India', year: aorYear ?? undefined });
 
   const notes = [];
-  if (e.remarks) notes.push({ kind: 'source', body: `Registry remarks column: “${e.remarks}”` });
+  if (e.remarks) {
+    // A row the parser could not split cleanly leaves the whole line in the
+    // remarks column, contact details and all. data/aor-list.json is committed,
+    // so anything that looks like a phone number or an email is lifted out of
+    // the note and into the private overlay rather than published by accident.
+    const leaked = [...new Set([...(e.remarks.match(EMAIL_G) || []), ...(e.remarks.match(PHONE_G) || [])])];
+    const body = leaked.reduce((t, v) => t.split(v).join('[redacted]'), e.remarks).replace(/\s+/g, ' ').trim();
+    notes.push({ kind: 'source', body: `Registry remarks column: “${body}”` });
+    for (const v of leaked) {
+      contacts.push({ kind: /@/.test(v) ? 'email' : 'phone', value: v, is_public: false,
+                      label: 'from an unsplit row in the roll' });
+      redacted++;
+    }
+  }
   if (r.nameChange) notes.push({ kind: 'source', body: `The roll records an earlier name: ${r.nameChange}.` });
   if (e.alsoKnownAs) notes.push({ kind: 'source', body: `The roll also gives the name as: ${e.alsoKnownAs}.` });
   if (dupNames.get(e.name) > 1) notes.push({ kind: 'source',
@@ -314,8 +352,11 @@ for (const e of entries) {
   if (e.ccCode) counts.withCode++;
   if (e.emails.length) counts.withEmail++;
 
+  const slug = allocate(e.name);
+  if (!INLINE_CONTACTS && contacts.length) contactOverlay.push({ slug, contacts });
+
   people.push({
-    slug: allocate(e.name),
+    slug,
     full_name: e.name,
     // An AoR is by definition entitled to file in the Supreme Court. That is
     // what the roll records, so the court and the designation are not guesses.
@@ -337,7 +378,8 @@ for (const e of entries) {
     courts: [{ slug: 'supreme-court-of-india', frequency: 'primary', since_year: aorYear ?? undefined,
                note: 'Registered on the roll of Advocates-on-Record.' }],
     verification_status: 'bar_verified',
-    contacts, credentials,
+    contacts: INLINE_CONTACTS ? contacts : undefined,
+    credentials,
     notes: notes.length ? notes : undefined,
     sources: [source],
   });
@@ -349,9 +391,12 @@ note('what the roll gives', `${counts.senior} entries carry a Senior Advocate de
   `${counts.withCode} carry a cause-list code; ${counts.withEmail} carry an email address.`);
 note('status from remarks', `${counts.deceased} recorded as expired, ${counts.inactive} as removed or resigned, ` +
   `${counts.on_bench} as elevated to a Bench.`);
-note('private by default', `Chamber addresses, phone numbers and email addresses are imported with ` +
-  `is_public: false. They are published by the Court, but the static export only carries public contacts, ` +
-  `so they stay on your machine unless you change that flag deliberately.`);
+note('contacts held separately', INLINE_CONTACTS
+  ? `Chamber addresses, phone numbers and emails are inline in this file, marked is_public: false. That keeps ` +
+    `them out of an HTML export but NOT out of the file itself — do not commit this to a public repository.`
+  : `${contactOverlay.length} records carry a chamber address, phone number or email. Those go to ` +
+    `${CONTACTS_OUT}, which .gitignore excludes, so a public repository does not republish them. A local ` +
+    `build still imports them, marked is_public: false so no HTML export carries them either.`);
 note('not in the roll', `The list records no practice area, no education, no Bar Council and no year of ` +
   `enrolment at the Bar — only AoR registration. Those fields are left empty.`);
 note('honorifics dropped', `The roll carries Sh./Smt./Ms./Mr. titles. They are not imported: the schema does ` +
@@ -364,6 +409,9 @@ if (crossFile.length) {
 const odd = people.filter(p => p.full_name.length > 45 || /\d/.test(p.full_name)).map(p => p.full_name);
 if (odd.length) note('names to check by hand', `${odd.length} names came out of the PDF looking wrong — ` +
   `usually a row where the extractor put the name and the address on one baseline: ${odd.slice(0, 10).join(' | ')}`);
+if (redacted) note('redacted from notes', `${redacted} phone numbers or email addresses appeared inside the ` +
+  `remarks column of a row the parser could not split. They were removed from the committed file and moved to ` +
+  `the private overlay.`);
 const noYear = people.filter(p => !p.aor_year).length;
 if (noYear) note('no registration year', `${noYear} entries had no readable registration date.`);
 if (SKIP_INACTIVE) note('inactive skipped', `${counts.skipped} expired/removed entries dropped by --skip-inactive.`);
@@ -380,9 +428,23 @@ const out = {
 fs.mkdirSync(dataDir, { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(out, null, 2));
 
+if (!INLINE_CONTACTS && contactOverlay.length) {
+  const cPath = path.resolve(ROOT_DIR, CONTACTS_OUT);
+  fs.mkdirSync(path.dirname(cPath), { recursive: true });
+  fs.writeFileSync(cPath, JSON.stringify({
+    // A merge overlay: it carries nothing but contacts, and must not blank the
+    // rest of the record it attaches to.
+    _merge: true,
+    _note: `Contact details from ${sourceTitle}, held outside the committed dataset. ` +
+           `Published by the Court; not republished here. Regenerated by scripts/convert-aor-list.js.`,
+    people: contactOverlay,
+  }, null, 2));
+}
+
 console.log(`Wrote ${OUT}`);
 console.log(`  people                ${people.length}`);
 console.log(`  senior advocates      ${counts.senior}`);
 console.log(`  with cause-list code  ${counts.withCode}`);
+console.log(`  contacts              ${INLINE_CONTACTS ? 'inline (do not commit publicly)' : `${contactOverlay.length} records -> ${CONTACTS_OUT}`}`);
 console.log(`\nReview log:`);
 for (const r of review) console.log(`  - ${r}`);

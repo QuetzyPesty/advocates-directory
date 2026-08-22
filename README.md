@@ -19,17 +19,17 @@ private notes and must not be reachable from the network.
 `npm run build` is destructive — it recreates `db/directory.sqlite` from
 `db/*.sql` and reloads every dataset in `data/`.
 
-The directory currently holds **4,463 people**:
+The directory currently holds **4,547 people**:
 
 | Source | People | Standing |
 |---|---|---|
-| Supreme Court roll of Advocates-on-Record | 3,928 | `bar_verified` — the Registry's own list |
+| Supreme Court roll of Advocates-on-Record | 4,012 | `bar_verified` — the Registry's own list |
 | Law firm partners from the deal-coverage database | 433 | `source_backed` — each cites the Bar & Bench reports naming them |
 | Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` |
 | NLS alumni list | 47 | `unverified` — a personal list, not a checked source |
 
-Plus 48 firms and chambers, 146 reported transactions, and 3,453 relationships —
-of which 54 come from the daily cause lists and grow every sitting day.
+Plus 48 firms and chambers, 146 reported transactions, and 3,446 relationships —
+of which 47 come from the daily cause lists and grow every sitting day.
 
 Most of the roll is a name, a registration year and a cause-list code: the spine
 everything else joins onto, not a profile. `npm run export -- --substantive`
@@ -157,14 +157,28 @@ daily lists), and the remarks column, which is where the real value hides:
 | `Removed at his own request` | `status: inactive` |
 | `Name changed on her request from …` | kept verbatim as a note |
 
-223 Senior Advocate designations and 3,570 cause-list codes come out of that one
+223 Senior Advocate designations and 3,654 cause-list codes come out of that one
 column.
 
-**Chamber addresses, phone numbers and emails are imported as private
-contacts.** The Court publishes them; a file you email to someone should not
-carry them. The exporter only ships `is_public` contacts, and nothing on the
-roll is marked public — so a shared export contains none of them. That is
-checked, not assumed.
+### Contacts are kept out of the repository
+
+The roll carries a chamber address, a phone number and an email for most
+entries. `is_public: false` keeps those out of every HTML export — but that flag
+means nothing to git, and `data/aor-list.json` is committed.
+
+So the converter writes them to **`data/private/aor-contacts.json`**, a merge
+overlay that `.gitignore` excludes. A local build imports them and they are
+there when you need them; a public clone has none of them. `--inline-contacts`
+restores the old behaviour if you would rather keep everything in one file.
+
+Two things back that up rather than trusting it:
+
+- Where a row defeats the parser, the whole line lands in the remarks column,
+  contact details and all. Anything phone- or email-shaped is lifted out of the
+  note into the private overlay and replaced with `[redacted]`, and the count is
+  reported.
+- `data/aor-list.json` is checked for email- and phone-shaped strings after
+  every run. It currently contains none.
 
 Not in the roll, and therefore left empty: practice area, education, Bar
 Council, year of enrolment at the Bar. Honorifics are dropped too — `Sh.`/`Smt.`
@@ -189,11 +203,16 @@ day — a year is under 10 MB, which matters when a scheduled job commits them
 forever. Re-running a day is byte-identical, so a retry produces no diff.
 
 Names are matched against the AoR roll rather than delimited by punctuation:
-the cause list names AoRs, and the roll *is* the list of AoRs. That gets ~90%
+the cause list names AoRs, and the roll *is* the list of AoRs. That gets ~91%
 of tagged appearances onto a person. The rest are mostly AoR **firms** — "M/s
 Parekh & Co" files under the firm's name — and are reported, never guessed at.
 Where a name matches two people on the roll, both slugs are carried and neither
 is assigned.
+
+**The name is the durable key, not the slug.** Slugs are allocated per roll
+edition, so the monthly refresh can rename people and orphan a year of archive.
+Every derivation re-resolves the stored names against the current datasets and
+reports what moved, so the archive repairs itself instead of quietly decaying.
 
 `scripts/derive-cause-lists.js` rebuilds `data/cause-list-derived.json` from the
 whole archive:
@@ -401,6 +420,9 @@ data/cause-list-derived.json
                         Court practice and co-appearance, rebuilt from the
                         archive on every run. A merge overlay, not a record
                         of truth — regenerate rather than edit.
+data/private/           Local-only overlays, excluded by .gitignore. Contact
+                        details off the AoR roll live here so that a public
+                        repository does not republish them.
 data/sc-advocates.json  25 Supreme Court advocates, researched from public
 data/sc-advocates-batch2.json
                         sources; every record cites at least one URL. Batch 2

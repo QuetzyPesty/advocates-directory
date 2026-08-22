@@ -27,6 +27,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
+import { nameIndex, normaliseName } from './lib/cause-list.js';
 
 const argv = process.argv.slice(2);
 const opt = (n, d) => {
@@ -63,10 +64,38 @@ for (const f of files) {
   }
 }
 
+// Re-resolve names against the CURRENT datasets rather than trusting the slug
+// stored when the day was scraped. Slugs are allocated per roll edition, so a
+// monthly roll refresh can rename people and silently orphan a year of archive.
+// The name is the durable key; the stored slug is only a fallback.
+const current = [];
+for (const f of fs.readdirSync(path.join(ROOT, 'data'))) {
+  if (!f.endsWith('.json') || f === 'import-template.json') continue;
+  try { current.push(...(JSON.parse(fs.readFileSync(path.join(ROOT, 'data', f), 'utf8')).people || [])); }
+  catch { /* not an import file */ }
+}
+const index = nameIndex(current);
+let rebound = 0, orphaned = 0;
+for (const r of rows) {
+  if (!r.name) continue;
+  const hit = index.get(normaliseName(r.name));
+  if (hit && hit.length === 1) {
+    if (r.slug && r.slug !== hit[0]) rebound++;
+    r.slug = hit[0];
+  } else if (r.slug && !hit) {
+    orphaned++;
+    r.slug = null;
+  }
+}
+
 const review = [];
 const note = (k, m) => review.push(`${k}: ${m}`);
 
 const resolved = rows.filter(r => r.slug);
+if (rebound || orphaned) note('re-resolved against the current roll',
+  `${rebound} appearances now point at a different slug than when they were scraped, and ${orphaned} no longer ` +
+  `match anyone — the roll is reissued periodically and slugs move with it. Names are re-resolved on every ` +
+  `derivation so the archive repairs itself instead of quietly decaying.`);
 const days = [...new Set(rows.map(r => r.date))].sort();
 note('window', `${resolved.length} resolved appearances from ${days.length} sitting ${days.length === 1 ? 'day' : 'days'} ` +
   `(${days[0]} to ${days[days.length - 1]}), across ${files.length} daily files.`);
