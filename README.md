@@ -19,14 +19,15 @@ private notes and must not be reachable from the network.
 `npm run build` is destructive — it recreates `db/directory.sqlite` from
 `db/*.sql` and reloads every dataset in `data/`.
 
-The directory currently holds **4,547 people**:
+A full local build holds **4,547 people**; a clone of this repository builds
+**4,500**, because two datasets are deliberately not published.
 
-| Source | People | Standing |
-|---|---|---|
-| Supreme Court roll of Advocates-on-Record | 4,012 | `bar_verified` — the Registry's own list |
-| Law firm partners from the deal-coverage database | 433 | `source_backed` — each cites the Bar & Bench reports naming them |
-| Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` |
-| NLS alumni list | 47 | `unverified` — a personal list, not a checked source |
+| Source | People | Standing | In the repo |
+|---|---|---|---|
+| Supreme Court roll of Advocates-on-Record | 4,012 | `bar_verified` — the Registry's own list | yes, without contact details |
+| Law firm partners from the deal-coverage database | 433 | `source_backed` — each cites the Bar & Bench reports naming them | yes |
+| Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` | yes |
+| NLS alumni list | 47 | `unverified` — a personal list, not a checked source | **no** — `data/private/` |
 
 Plus 48 firms and chambers, 146 reported transactions, and 3,446 relationships —
 of which 47 come from the daily cause lists and grow every sitting day.
@@ -52,9 +53,14 @@ anything having to be untangled first.
 
 ## Loading the NLS alumni list
 
+This one is **local-only**: it is a private list of named people who did not put
+themselves in a public directory, so both the RTF and everything derived from it
+live under `data/private/` and are excluded by `.gitignore`. A clone of this
+repository has neither.
+
 ```bash
-npm run convert:nls -- "NLS Alum list.rtf" data/nls-alumni.json
-npm run import -- data/nls-alumni.json
+npm run convert:nls -- "data/private/NLS Alum list.rtf" data/private/nls-alumni.json
+npm run import -- data/private/nls-alumni.json
 ```
 
 `scripts/convert-nls-rtf.js` parses the RTF itself (no `textutil`, no
@@ -160,7 +166,7 @@ daily lists), and the remarks column, which is where the real value hides:
 223 Senior Advocate designations and 3,654 cause-list codes come out of that one
 column.
 
-### Contacts are kept out of the repository
+### What stays out of the repository
 
 The roll carries a chamber address, a phone number and an email for most
 entries. `is_public: false` keeps those out of every HTML export — but that flag
@@ -171,7 +177,14 @@ overlay that `.gitignore` excludes. A local build imports them and they are
 there when you need them; a public clone has none of them. `--inline-contacts`
 restores the old behaviour if you would rather keep everything in one file.
 
-Two things back that up rather than trusting it:
+The same applies to the NLS alumni list — see above.
+
+Load order follows what a file **is**, not where it sits: a dataset owns the
+people it names and replaces their child rows, an overlay carries a fragment and
+runs after every owner. So moving a dataset into `data/private/` changes what is
+published without changing what is built.
+
+Two things back the contact split up rather than trusting it:
 
 - Where a row defeats the parser, the whole line lands in the remarks column,
   contact details and all. Anything phone- or email-shaped is lifted out of the
@@ -410,7 +423,7 @@ db/01-schema.sql        31 tables. Jurisdiction-neutral structure.
 db/02-taxonomy.sql      Courts, practice areas, law schools, Bar Councils,
                         relationship vocabulary. The India-specific layer —
                         swap this file to port the model elsewhere.
-data/nls-alumni.json    Generated from the RTF by the converter.
+
 data/firm-partners.json 433 law firm partners, 37 firms and 146 reported
                         transactions, generated from the deal-coverage database.
 data/aor-list.json      3,928 Advocates-on-Record, parsed from the Registry's
@@ -420,9 +433,9 @@ data/cause-list-derived.json
                         Court practice and co-appearance, rebuilt from the
                         archive on every run. A merge overlay, not a record
                         of truth — regenerate rather than edit.
-data/private/           Local-only overlays, excluded by .gitignore. Contact
-                        details off the AoR roll live here so that a public
-                        repository does not republish them.
+data/private/           Local-only, excluded by .gitignore: contact details off
+                        the AoR roll, the NLS alumni list and the RTF it came
+                        from. A clone builds fine without them.
 data/sc-advocates.json  25 Supreme Court advocates, researched from public
 data/sc-advocates-batch2.json
                         sources; every record cites at least one URL. Batch 2

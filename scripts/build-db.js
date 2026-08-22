@@ -30,41 +30,51 @@ for (const file of ['01-schema.sql', '02-taxonomy.sql']) {
 db.close();
 
 if (!empty) {
-  // Load every dataset in data/, skipping the blank template.
+  // Datasets live in data/. data/private/ holds the ones that are deliberately
+  // not committed — contact details off the AoR roll, the personal alumni list
+  // — so that a public repository does not republish them. Their absence in a
+  // clone is normal, not an error.
   const dir = path.join(ROOT, 'data');
-  const files = fs.existsSync(dir)
-    ? fs.readdirSync(dir).filter(f => f.endsWith('.json') && f !== 'import-template.json').sort()
-        .map(f => path.join(dir, f))
-    : [];
-  // data/private/ holds overlays that are deliberately not committed — contact
-  // details off the AoR roll, for one. They are part of a local build and
-  // absent from a clone, so their absence is normal, not an error.
   const privateDir = path.join(dir, 'private');
-  const privateFiles = fs.existsSync(privateDir)
-    ? fs.readdirSync(privateDir).filter(f => f.endsWith('.json')).sort()
-        .map(f => path.join(privateDir, f))
+  const jsonIn = d => fs.existsSync(d)
+    ? fs.readdirSync(d).filter(f => f.endsWith('.json') && f !== 'import-template.json')
+        .map(f => path.join(d, f))
     : [];
-  if (!files.length) console.log('no datasets in data/ — database is empty');
+
+  // Load order follows what a file IS, not where it sits. A dataset owns the
+  // people it names and replaces their child rows; an overlay carries a
+  // fragment and must run after every owner has had its final say, or the
+  // owner's next pass wipes it straight back out. Sorting datasets by basename
+  // keeps that order stable no matter which directory a file lives in — moving
+  // nls-alumni.json into data/private/ must not let it clobber the richer
+  // records that sc-advocates.json owns for the same people.
+  const all = [...jsonIn(dir), ...jsonIn(privateDir)];
+  const isOverlay = f => {
+    try { return JSON.parse(fs.readFileSync(f, 'utf8'))._merge === true; }
+    catch { return false; }
+  };
+  const byName = (a, b) => path.basename(a).localeCompare(path.basename(b));
+  const datasets = all.filter(f => !isOverlay(f)).sort(byName);
+  const overlays = all.filter(isOverlay).sort(byName);
+
+  if (!datasets.length) console.log('no datasets in data/ — database is empty');
   const load = f => execFileSync(process.execPath,
     [path.join(ROOT, 'scripts', 'import-json.js'), f], { stdio: 'inherit' });
 
-  for (const f of files) load(f);
+  for (const f of datasets) load(f);
 
   // Second pass. A relationship whose other endpoint lives in a file that had
   // not been loaded yet is skipped, so datasets that reference each other only
   // resolve one way on a single pass. The import is idempotent, so replaying it
   // once everyone exists is free and picks up the cross-file edges.
-  if (files.length > 1) {
+  if (datasets.length > 1) {
     console.log(`\nSecond pass — resolving relationships that cross datasets:`);
-    for (const f of files) load(f);
+    for (const f of datasets) load(f);
   }
 
-  // Overlays go last, after every owning file has had its final say. A normal
-  // import replaces the child rows it owns, so loading these earlier would let
-  // the second pass wipe them straight back out.
-  if (privateFiles.length) {
-    console.log(`\nLocal-only overlays (data/private/, not committed):`);
-    for (const f of privateFiles) load(f);
+  if (overlays.length) {
+    console.log(`\nOverlays:`);
+    for (const f of overlays) load(f);
   }
 }
 
