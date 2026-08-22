@@ -1,0 +1,1633 @@
+{
+  "_note": "Researched from public sources (Wikipedia, Bar & Bench, LiveLaw, official law-officer lists, chamber/firm sites). Every record cites at least one source actually retrieved.",
+  "_review": [
+    "Abhishek Manu Singhvi: exact year of Senior Advocate designation not confirmed by a retrieved source (widely reported as youngest ever at 34, implying ~1993) — left senior_designated_year null, flagged in notes.",
+    "Karuna Nundy is very recently designated (2024 per search results) — confirm before treating as long-established senior counsel.",
+    "Menaka Guruswamy is reported to have become a Rajya Sabha MP in 2026 per one source; this is a political fact outside scope and was NOT added as a position, but flagged here since it may affect 'practising' status.",
+    "Vikramjit Banerjee and Aishwarya Bhati re-appointment dates from official law-officer PDFs dated 2026 were referenced by search snippets but the PDFs themselves were not independently opened/verified line by line.",
+    "Enrolment years / bar council entries for several advocates (Divan, Aryama Sundaram beyond enrolment, Gonsalves, John's Delhi enrolment, Grover) rely on secondary profiles rather than primary Bar Council rolls.",
+    "C. Aryama Sundaram, Colin Gonsalves, Vrinda Grover, Karuna Nundy: no explicit senior_designating_court/year fully corroborated by two independent sources — corroborate further if precision matters.",
+    "Fee band removed for 3 records: the value was not supported by a source."
+  ],
+  "_new_institutions": [],
+  "organisations": [
+    {
+      "slug": "human-rights-law-network",
+      "name": "Human Rights Law Network",
+      "type": "ngo",
+      "city": "Mumbai",
+      "state": "Maharashtra"
+    },
+    {
+      "slug": "lawyers-collective",
+      "name": "Lawyers Collective",
+      "type": "ngo",
+      "city": "New Delhi",
+      "state": "Delhi"
+    }
+  ],
+  "people": [
+    {
+      "slug": "harish-salve",
+      "full_name": "Harish Salve",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1992,
+      "is_aor": 0,
+      "bar_council": "bcd",
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Solicitor General of India; global arbitration and constitutional practice",
+      "short_bio": "Harish Salve was designated a Senior Advocate in 1992 and served as Solicitor General of India from 1999 to 2002. He represented India in the Kulbhushan Jadhav case at the International Court of Justice and was appointed King's Counsel for England and Wales in 2020.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "international-arbitration",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "constitutional",
+          "emphasis": "secondary"
+        },
+        {
+          "slug": "tax",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 1999,
+          "end_year": 2002
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Harish Salve - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Harish_Salve",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "firm_website",
+          "title": "Harish Salve KC - Blackstone Chambers",
+          "url": "https://www.blackstonechambers.com/barristers/harish-salve-kc/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "kapil-sibal",
+      "full_name": "Kapil Sibal",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1983,
+      "is_aor": 0,
+      "enrolment_year": 1972,
+      "first_year_of_practice": 1972,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Union Law Minister; multi-time Supreme Court Bar Association President",
+      "short_bio": "Kapil Sibal joined the bar in 1972 and was designated Senior Advocate in 1983. He was appointed Additional Solicitor General of India in 1989, later served as Union Minister of Law and Justice among other cabinet posts, and has been elected President of the Supreme Court Bar Association multiple times, most recently after a landslide win.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "civil-litigation",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        },
+        {
+          "code": "hi",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "harvard-law",
+          "degree": "LL.M.",
+          "end_year": 1977
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 1989,
+          "end_year": null
+        },
+        {
+          "title": "Union Minister of Law and Justice",
+          "body": "Government of India",
+          "start_year": 2009,
+          "end_year": 2012
+        },
+        {
+          "title": "President, Supreme Court Bar Association",
+          "body": "Supreme Court Bar Association",
+          "start_year": 2024,
+          "end_year": null
+        }
+      ],
+      "sources": [
+        {
+          "kind": "news",
+          "title": "Kapil Sibal elected as President of Supreme Court Bar Association",
+          "url": "https://www.Tribuneindia.com/news/india/kapil-sibal-elected-as-president-of-supreme-court-bar-association-after-more-than-two-decades-622099",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "directory",
+          "title": "Shri Kapil Sibal Senior Advocate - Bar Council of India Patron Members",
+          "url": "https://www.barindia.in/patron-members/kapil-sibal.pdf",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "abhishek-manu-singhvi",
+      "full_name": "Abhishek Manu Singhvi",
+      "honorific": "Dr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate and Rajya Sabha MP; among youngest ever designated Senior Advocates",
+      "short_bio": "Abhishek Manu Singhvi is a Senior Advocate of the Supreme Court of India, reported to have been designated at age 34, making him one of the youngest Senior Advocates in the Court's history. He is also a Member of Parliament (Rajya Sabha).",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "commercial",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: exact year of Senior Advocate designation not confirmed by a directly retrieved source; commonly reported as occurring at age 34 (circa early 1990s)."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Abhishek Singhvi - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Abhishek_Singhvi",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "mukul-rohatgi",
+      "full_name": "Mukul Rohatgi",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1994,
+      "senior_designating_court": "delhi-hc",
+      "is_aor": 0,
+      "bar_council": "bcd",
+      "enrolment_year": 1978,
+      "first_year_of_practice": 1978,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Attorney General for India (2014-2017); high-stakes constitutional and criminal litigation",
+      "short_bio": "Mukul Rohatgi was enrolled as an advocate with the Bar Council of Delhi in May 1978 and designated Senior Advocate by the Delhi High Court in 1994. He served as the 12th Attorney General for India from 19 June 2014 to 18 June 2017 and has also served as Additional Solicitor General of India.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "criminal",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "government-law-college-mumbai",
+          "degree": "LL.B."
+        }
+      ],
+      "positions": [
+        {
+          "title": "Attorney General for India",
+          "body": "Government of India",
+          "start_year": 2014,
+          "end_year": 2017
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Mukul Rohatgi - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Mukul_Rohatgi",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "gopal-subramanium",
+      "full_name": "Gopal Subramanium",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1993,
+      "senior_designating_court": "supreme-court-of-india",
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Solicitor General of India; international arbitration and constitutional law",
+      "short_bio": "Gopal Subramanium was designated a Senior Advocate by the Supreme Court in May 1993, among the youngest to receive the designation. He served as Additional Solicitor General of India (2005-2009) and as Solicitor General of India (2009-2011), and has acted as counsel for major technology and pharmaceutical companies in arbitration and litigation.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "international-arbitration",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        },
+        {
+          "slug": "delhi-hc",
+          "frequency": "regular"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2005,
+          "end_year": 2009
+        },
+        {
+          "title": "Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2009,
+          "end_year": 2011
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Gopal Subramanium - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Gopal_Subramanium",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "shyam-divan",
+      "full_name": "Shyam Divan",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Constitutional and public law senior advocate; Puttaswamy privacy and Aadhaar cases",
+      "short_bio": "Shyam Divan is a Senior Advocate practising constitutional, civil, banking, securities, arbitration and environmental law at the Supreme Court of India. He appeared in the Justice K.S. Puttaswamy privacy judgment, the Aadhaar challenge, and Navtej Singh Johar decriminalising homosexuality, and is the son of the late Senior Advocate Anil Divan.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "environment",
+          "emphasis": "secondary"
+        },
+        {
+          "slug": "banking-finance",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "relationships_note": "see relationships array: son of Anil B. Divan",
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Shyam Divan - Ashoka University",
+          "url": "https://www.ashoka.edu.in/profile/shyam-divan/",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "news",
+          "title": "Who is Shyam Divan, and why is he at the forefront of the Aadhaar battle?",
+          "url": "https://archive.factordaily.com/shyam-divan-advocate-aadhaar-supreme-court/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "arvind-datar",
+      "full_name": "Arvind P. Datar",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1999,
+      "senior_designating_court": "madras-hc",
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "Chennai",
+      "base_state": "Tamil Nadu",
+      "headline": "Senior Advocate; leading authority on tax and constitutional law",
+      "short_bio": "Arvind Datar was designated Senior Advocate by the Madras High Court in 1999 and has over three decades of practice before the Madras High Court and Supreme Court. He authored the biography of Nani Palkhivala and a commentary on the Constitution of India, and appeared in the Vodafone tax case, the National Tax Tribunal case, and the NJAC case. He received the inaugural Fali Nariman Memorial Award in 2025.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "tax",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "constitutional",
+          "emphasis": "secondary"
+        },
+        {
+          "slug": "company-law",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "madras-hc",
+          "frequency": "primary"
+        },
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        },
+        {
+          "code": "ta",
+          "proficiency": "fluent"
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Arvind P. Datar on the job of a Senior Advocate - Super Lawyer",
+          "url": "https://superlawyer.in/arvind-p-datar-on-senior-advocate-taxation-law-writing-authoritative-law-books",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "firm_website",
+          "title": "Arvind Datar SA - Fountain Court Chambers",
+          "url": "https://fountaincourt.uk/profile/arvind-datar-sa/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "dushyant-dave",
+      "full_name": "Dushyant A. Dave",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate; multi-term President of the Supreme Court Bar Association",
+      "short_bio": "Dushyant Dave is a Senior Advocate with over four decades of practice who served as President of the Supreme Court Bar Association across multiple terms, including 2014-15 and again from 2019 until he stepped down on 14 January 2021. He was a member of the National Legal Services Authority from 2004 to 2008.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "civil-litigation",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "constitutional",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "President, Supreme Court Bar Association",
+          "body": "Supreme Court Bar Association",
+          "start_year": 2019,
+          "end_year": 2021
+        }
+      ],
+      "sources": [
+        {
+          "kind": "news",
+          "title": "Breaking: Senior Advocate Dushyant Dave elected SCBA President - Bar & Bench",
+          "url": "https://www.barandbench.com/news/dushyant-dave-elected-scba-president",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "news",
+          "title": "Supreme Court Bar Association president Dushyant Dave resigns - Tribune",
+          "url": "https://www.tribuneindia.com/news/nation/supreme-court-bar-association-president-dushyant-dave-resigns-198382",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "c-aryama-sundaram",
+      "full_name": "C. Aryama Sundaram",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1995,
+      "senior_designating_court": "madras-hc",
+      "is_aor": 0,
+      "bar_council": "bctp",
+      "enrolment_year": 1980,
+      "first_year_of_practice": 1980,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate; corporate and high-profile family-business litigation",
+      "short_bio": "C. Aryama Sundaram enrolled with the Madras Bar Council in November 1980 and joined the Chennai firm King & Partridge. He served as Standing Counsel for the Central Government from 1989 and was designated Senior Advocate in 1995 at age 38 -- reportedly the youngest in Madras High Court history at the time -- before relocating his practice to Delhi. He has represented the Mistry family against Tata Sons and the BCCI, among others.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "commercial",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "company-law",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        },
+        {
+          "slug": "madras-hc",
+          "frequency": "regular"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        },
+        {
+          "code": "ta",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Standing Counsel for the Central Government (Madras HC)",
+          "body": "Government of India",
+          "start_year": 1989,
+          "end_year": 1995
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Aryama Sundaram - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Aryama_Sundaram",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "indira-jaising",
+      "full_name": "Indira Jaising",
+      "honorific": "Ms.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1986,
+      "senior_designating_court": "bombay-hc",
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "First woman Senior Advocate (Bombay HC, 1986) and first woman Additional Solicitor General",
+      "short_bio": "Indira Jaising became the first woman designated Senior Advocate, by the Bombay High Court, in 1986, and in 2009 became the first woman appointed Additional Solicitor General of India. She co-founded the NGO Lawyers Collective in 1981 with her husband Anand Grover and has litigated landmark women's rights and workplace sexual harassment cases, and served on the UN CEDAW Committee (2009-2018).",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "human-rights",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "family-personal",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "affiliations": [
+        {
+          "organisation": "lawyers-collective",
+          "role": "founder",
+          "is_current": 1
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2009,
+          "end_year": 2014
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Indira Jaising - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Indira_Jaising",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "prashant-bhushan",
+      "full_name": "Prashant Bhushan",
+      "honorific": "Mr.",
+      "designation": "advocate",
+      "is_senior_advocate": 0,
+      "is_aor": 1,
+      "first_year_of_practice": 1983,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Advocate-on-Record known for public interest litigation on corruption and environment",
+      "short_bio": "Prashant Bhushan is an Advocate-on-Record who has practised before the Supreme Court of India since 1983, after studying law at the University of Allahabad. He is known for using public interest litigation on environment, corruption and human rights, and is associated with the Centre for Public Interest Litigation and the People's Union for Civil Liberties.",
+      "accepts_direct_briefs": 1,
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "public-interest",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "environment",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        },
+        {
+          "code": "hi",
+          "proficiency": "fluent"
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Prashant Bhushan - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Prashant_Bhushan",
+          "retrieved_at": "2026-07-28"
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: educated at University of Allahabad (LL.B.); no matching institution slug exists in current taxonomy, so education field omitted rather than mapped to an incorrect slug. Consider adding University of Allahabad to _new_institutions."
+        },
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: fee band not recorded — no public source states one."
+        }
+      ]
+    },
+    {
+      "slug": "colin-gonsalves",
+      "full_name": "Colin Gonsalves",
+      "honorific": "Dr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "Mumbai",
+      "base_state": "Maharashtra",
+      "headline": "Founder, Human Rights Law Network; Right Livelihood Award laureate (2017)",
+      "short_bio": "Colin Gonsalves is a Senior Advocate of the Supreme Court of India and founder of the Human Rights Law Network (established 1989 in Mumbai), which has grown into a large public-interest legal network. He is senior counsel in the Right to Food case, one of the largest class actions in India, and received the Right Livelihood Award in 2017.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "human-rights",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "legal-aid",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "affiliations": [
+        {
+          "organisation": "human-rights-law-network",
+          "role": "founder",
+          "is_current": 1
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Colin Gonsalves - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Colin_Gonsalves",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "professional_profile",
+          "title": "Colin Gonsalves - Right Livelihood",
+          "url": "https://rightlivelihood.org/the-change-makers/find-a-laureate/colin-gonsalves/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "rebecca-john",
+      "full_name": "Rebecca Mammen John",
+      "honorific": "Ms.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2013,
+      "senior_designating_court": "delhi-hc",
+      "is_aor": 0,
+      "bar_council": "bcd",
+      "enrolment_year": 1988,
+      "first_year_of_practice": 1988,
+      "status": "practising",
+      "primary_court": "delhi-hc",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "First woman Senior Advocate designated on the criminal side by the Delhi High Court",
+      "short_bio": "Rebecca Mammen John enrolled with the Bar Council of Delhi in 1988 and was designated Senior Advocate by the Delhi High Court in 2013, the first woman so designated on the criminal side. She has appeared in high-profile criminal matters including the 1996 hawala case, the Aarushi Talwar murder case, and the Priya Ramani criminal defamation case.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "criminal-trial",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "white-collar",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "delhi-hc",
+          "frequency": "primary"
+        },
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "regular"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "campus-law-centre",
+          "degree": "LL.B."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Rebecca Mammen John - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Rebecca_Mammen_John",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "vrinda-grover",
+      "full_name": "Vrinda Grover",
+      "honorific": "Ms.",
+      "designation": "advocate",
+      "is_senior_advocate": 0,
+      "is_aor": 0,
+      "first_year_of_practice": 1989,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Human rights and criminal law advocate; SOAS honorary Doctorate of Laws (2018)",
+      "short_bio": "Vrinda Grover has practised independently as an advocate before the Supreme Court, High Courts and trial courts of India since 1989, specialising in criminal law, women's rights and human rights, representing survivors of communal violence, custodial torture and sexual violence. She holds an LL.M. from New York University School of Law and an LL.B. from Delhi University, and received an honorary Doctorate of Laws from SOAS in 2018.",
+      "accepts_direct_briefs": 1,
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "human-rights",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "criminal-trial",
+          "emphasis": "secondary"
+        },
+        {
+          "slug": "domestic-violence",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "regular"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "nyu-law",
+          "degree": "LL.M."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Vrinda Grover - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Vrinda_Grover",
+          "retrieved_at": "2026-07-28"
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: fee band not recorded — no public source states one."
+        }
+      ]
+    },
+    {
+      "slug": "karuna-nundy",
+      "full_name": "Karuna Nundy",
+      "honorific": "Ms.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2024,
+      "senior_designating_court": "supreme-court-of-india",
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate; constitutional, technology and commercial litigation",
+      "short_bio": "Karuna Nundy was designated a Senior Advocate of the Supreme Court of India in 2024. She holds a BA in Economics from St. Stephen's College, Delhi University, an LL.B. from the University of Cambridge, and an LL.M. from Columbia Law School, and was named to Time magazine's 100 most influential people list (2022-2023).",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "technology-law",
+          "emphasis": "secondary"
+        },
+        {
+          "slug": "commercial",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "cambridge",
+          "degree": "LL.B."
+        },
+        {
+          "institution": "columbia-law",
+          "degree": "LL.M."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Karuna Nundy - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Karuna_Nundy",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "sidharth-luthra",
+      "full_name": "Sidharth Luthra",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2007,
+      "is_aor": 0,
+      "bar_council": "bcd",
+      "enrolment_year": 1991,
+      "first_year_of_practice": 1991,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Additional Solicitor General of India; criminal and white-collar defence",
+      "short_bio": "Sidharth Luthra was admitted to the Bar in Delhi in 1991, completed an LL.B. from Delhi University in 1990 and an MPhil in Criminology from Cambridge in 1991, and was designated Senior Advocate in 2007. He served as Additional Solicitor General of India until his resignation in May 2014, and specialises in criminal law, white-collar crime and cyber fraud.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "white-collar",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "criminal-trial",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "education": [
+        {
+          "institution": "faculty-of-law-du",
+          "degree": "LL.B.",
+          "end_year": 1990
+        },
+        {
+          "institution": "cambridge",
+          "degree": "MPhil (Criminology)",
+          "end_year": 1991
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": null,
+          "end_year": 2014
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Sidharth Luthra - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sidharth_Luthra",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "sanjay-hegde",
+      "full_name": "Sanjay R. Hegde",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "first_year_of_practice": 1989,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate; civil liberties litigation and Supreme Court amicus roles",
+      "short_bio": "Sanjay Hegde began his career in 1989 with Mulla & Mulla & Craigie Blunt & Caroe, then moved to Delhi to practise in the chambers of Senior Advocate G. Ramaswamy and served for a decade as Advocate-on-Record for the State of Karnataka before focusing on private practice. He was one of two amicus curiae appointed by the Supreme Court in the 2012 Delhi gang-rape case and was appointed an interlocutor in the Shaheen Bagh protests.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "civil-liberties",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "constitutional",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Sanjay Hegde - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Sanjay_Hegde",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "news",
+          "title": "New SC seniors: Sanjay Hegde ... - Legally India",
+          "url": "https://www.legallyindia.com/the-bench-and-the-bar/new-sc-seniors-sanjayuvacha-hegde-rana-muhkerjee-subramonium-prasad-mahalakshmi-pavani-v-mohana-20150423-5854",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "r-venkataramani",
+      "full_name": "R. Venkataramani",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "bar_council": "bctp",
+      "enrolment_year": 1977,
+      "first_year_of_practice": 1977,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "16th Attorney General for India (2022-present); constitutional and environmental law",
+      "short_bio": "R. Venkataramani enrolled with the Bar Council of Tamil Nadu in July 1977 and has practised before the Supreme Court for over four decades in constitutional law, environmental law, taxation, and tribal and children's rights. He was appointed the 16th Attorney General for India effective 1 October 2022, succeeding K.K. Venugopal, and his term was extended to 30 September 2027. He served as a Member of the Law Commission of India in 2010 and 2013.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "environment",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Attorney General for India",
+          "body": "Government of India",
+          "start_year": 2022,
+          "end_year": null
+        },
+        {
+          "title": "Member, Law Commission of India",
+          "body": "Law Commission of India",
+          "start_year": 2010,
+          "end_year": 2013
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "R. Venkataramani - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/R._Venkataramani",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "tushar-mehta",
+      "full_name": "Tushar Mehta",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2008,
+      "senior_designating_court": "gujarat-hc",
+      "is_aor": 0,
+      "bar_council": "bcguj",
+      "enrolment_year": 1987,
+      "first_year_of_practice": 1987,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Solicitor General of India since 2018; second-longest serving SG after C.K. Daphtary",
+      "short_bio": "Tushar Mehta enrolled as an advocate with the Bar Council of Gujarat in 1987, beginning his career under Senior Advocate Krishnakant Vakharia, and was designated Senior Advocate by the Gujarat High Court in 2008. He was appointed Additional Solicitor General of India in 2014 and has served as Solicitor General of India since 10 October 2018, making him the second-longest serving Solicitor General after C.K. Daphtary.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "regulatory",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        },
+        {
+          "code": "gu",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2014,
+          "end_year": 2018
+        },
+        {
+          "title": "Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2018,
+          "end_year": null
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: educated at Gujarat University (law degree, five gold medals); no matching institution slug exists in current taxonomy, so education field omitted. Consider adding Gujarat University to _new_institutions."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Tushar Mehta - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Tushar_Mehta",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "kk-venugopal",
+      "full_name": "K.K. Venugopal",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 1972,
+      "senior_designating_court": "supreme-court-of-india",
+      "is_aor": 0,
+      "enrolment_year": 1954,
+      "first_year_of_practice": 1954,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Former Attorney General for India (2017-2022); constitutional law doyen",
+      "short_bio": "Kottayan Katankot Venugopal was enrolled as an advocate on 27 January 1954 and designated Senior Advocate by the Supreme Court of India in 1972. He served as Additional Solicitor General of India in 1979-80 and as the 15th Attorney General for India from 1 July 2017 to 30 September 2022.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 1979,
+          "end_year": 1980
+        },
+        {
+          "title": "Attorney General for India",
+          "body": "Government of India",
+          "start_year": 2017,
+          "end_year": 2022
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "K. K. Venugopal - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/K._K._Venugopal",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "indu-malhotra",
+      "full_name": "Indu Malhotra",
+      "honorific": "Ms. Justice (Retd.)",
+      "designation": "retired_judge",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2007,
+      "senior_designating_court": "supreme-court-of-india",
+      "is_aor": 0,
+      "first_year_of_practice": 1983,
+      "status": "retired",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "First woman directly appointed to the Supreme Court from the Bar (2018-2021)",
+      "short_bio": "Indu Malhotra joined the legal profession in 1983 and was designated Senior Advocate of the Supreme Court in 2007, only the second woman to receive that designation. In April 2018 she became the first woman ever directly appointed to the Supreme Court of India from the Bar, and the seventh woman judge of the Court since independence; she retired on 13 March 2021.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "arbitration",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "constitutional",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Judge, Supreme Court of India",
+          "body": "Supreme Court of India",
+          "start_year": 2018,
+          "end_year": 2021
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Indu Malhotra - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Indu_Malhotra",
+          "retrieved_at": "2026-07-28"
+        },
+        {
+          "kind": "professional_profile",
+          "title": "Indu Malhotra - Supreme Court Observer",
+          "url": "https://www.scobserver.in/judges/indu-malhotra/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "menaka-guruswamy",
+      "full_name": "Menaka Guruswamy",
+      "honorific": "Ms.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Senior Advocate; lead counsel in Navtej Singh Johar decriminalising Section 377",
+      "short_bio": "Menaka Guruswamy is a Senior Advocate of the Supreme Court of India best known, with Arundhati Katju, for successfully arguing Navtej Singh Johar v. Union of India, which struck down Section 377 of the Indian Penal Code criminalising same-sex relations. She was named to Foreign Policy's '100 Leading Global Thinkers' (2019) and Time magazine's '100 Most Influential People' (2019).",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "human-rights",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: one source suggested she became a Rajya Sabha MP in 2026; this personal/political detail was not corroborated further and is omitted from structured fields."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Menaka Guruswamy - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Menaka_Guruswamy",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "arundhati-katju",
+      "full_name": "Arundhati Katju",
+      "honorific": "Ms.",
+      "designation": "advocate",
+      "is_senior_advocate": 0,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Advocate qualified in India and New York; co-counsel in Navtej Singh Johar (Section 377)",
+      "short_bio": "Arundhati Katju is a lawyer qualified to practise in India and New York, best known for representing petitioners with Menaka Guruswamy in Navtej Singh Johar v. Union of India, the 2018 Supreme Court judgment decriminalising homosexuality in India. She was named to Time magazine's '100 Most Influential People' list in 2019.",
+      "accepts_direct_briefs": 1,
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "human-rights",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "regular"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "Arundhati Katju - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Arundhati_Katju",
+          "retrieved_at": "2026-07-28"
+        }
+      ],
+      "relationships_note": "co_counsel_with menaka-guruswamy on Navtej Singh Johar per Bar & Bench / Scroll.in sources",
+      "notes": [
+        {
+          "kind": "source",
+          "body": "UNCERTAIN: fee band not recorded — no public source states one."
+        }
+      ]
+    },
+    {
+      "slug": "vikramjit-banerjee",
+      "full_name": "Vikramjit Banerjee",
+      "honorific": "Mr.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Additional Solicitor General of India since 2018 (re-appointed multiple terms)",
+      "short_bio": "Vikramjit Banerjee was appointed Additional Solicitor General of India in March 2018 and has been reappointed for subsequent terms. Before litigation, he was on the faculty at the National University of Juridical Sciences (NUJS), and he served as Advocate General of Nagaland from 2015 to 2018.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "regulatory",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "notes": [
+        {
+          "kind": "source",
+          "body": "Prior to litigation practice, was on the faculty of NUJS (National University of Juridical Sciences, Kolkata) -- not added as a formal 'education' entry since he was faculty, not a degree student, there."
+        }
+      ],
+      "positions": [
+        {
+          "title": "Advocate General of Nagaland",
+          "body": "Government of Nagaland",
+          "start_year": 2015,
+          "end_year": 2018
+        },
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": 2018,
+          "end_year": null
+        }
+      ],
+      "sources": [
+        {
+          "kind": "news",
+          "title": "Meet the lawyers who defend the govt: Cases & careers of 5 reappointed Additional Solicitors General - The Print",
+          "url": "https://theprint.in/judiciary/meet-the-lawyers-who-defend-the-govt-cases-careers-of-5-reappointed-additional-solicitors-general/2967983/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    },
+    {
+      "slug": "aishwarya-bhati",
+      "full_name": "Aishwarya Bhati",
+      "honorific": "Ms.",
+      "designation": "senior_advocate",
+      "is_senior_advocate": 1,
+      "senior_designated_year": 2019,
+      "senior_designating_court": "supreme-court-of-india",
+      "is_aor": 0,
+      "status": "practising",
+      "primary_court": "supreme-court-of-india",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "Additional Solicitor General of India; youngest woman ever designated Senior Advocate by the Supreme Court",
+      "short_bio": "Aishwarya Bhati was designated Senior Advocate by the Supreme Court of India in 2019, reportedly the youngest woman ever to receive the designation. She previously served as Additional Advocate General for Uttar Pradesh and is currently an Additional Solicitor General of India -- one of only four women to hold that office -- with a practice focused on women's, children's and disability rights and anti-tobacco litigation.",
+      "accepts_direct_briefs": 0,
+      "fee_band": "senior_counsel",
+      "verification_status": "source_backed",
+      "practice_areas": [
+        {
+          "slug": "constitutional",
+          "emphasis": "primary"
+        },
+        {
+          "slug": "human-rights",
+          "emphasis": "secondary"
+        }
+      ],
+      "courts": [
+        {
+          "slug": "supreme-court-of-india",
+          "frequency": "primary"
+        }
+      ],
+      "languages": [
+        {
+          "code": "en",
+          "proficiency": "fluent"
+        }
+      ],
+      "positions": [
+        {
+          "title": "Additional Advocate General, Uttar Pradesh",
+          "body": "Government of Uttar Pradesh",
+          "start_year": null,
+          "end_year": null
+        },
+        {
+          "title": "Additional Solicitor General of India",
+          "body": "Government of India",
+          "start_year": null,
+          "end_year": null
+        }
+      ],
+      "sources": [
+        {
+          "kind": "professional_profile",
+          "title": "In conversation with Aishwarya Bhati on her experience as youngest woman Senior Advocate - SCC Online Blog",
+          "url": "https://www.scconline.com/blog/post/2022/02/24/in-conversation-with-aishwarya-bhati-on-her-experience-as-youngest-women-senior-advocate-designated-by-supreme-court-of-india/",
+          "retrieved_at": "2026-07-28"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "menaka-guruswamy",
+      "to": "arundhati-katju",
+      "type": "co_counsel_with",
+      "strength": 5,
+      "note": "Co-counsel for petitioners in Navtej Singh Johar v. Union of India (2018), per Bar & Bench and Scroll.in reporting."
+    }
+  ]
+}

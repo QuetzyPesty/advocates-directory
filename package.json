@@ -1,0 +1,23 @@
+{
+  "name": "advocates-directory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A private directory and screener for advocates. Phase 1: directory, profiles, relationship graph, personal notes.",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "build": "node scripts/build-db.js",
+    "build:empty": "node scripts/build-db.js --empty",
+    "import": "node scripts/import-json.js",
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "convert:nls": "node scripts/convert-nls-rtf.js",
+    "convert:firms": "node scripts/convert-firm-db.js",
+    "convert:aor": "node scripts/convert-aor-list.js",
+    "scrape:causelist": "node scripts/scrape-cause-list.js",
+    "derive:causelist": "node scripts/derive-cause-lists.js",
+    "export": "node scripts/export-static.js"
+  }
+}

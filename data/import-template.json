@@ -1,0 +1,42 @@
+{
+  "_note": "Minimal import template. See docs/DATA-DICTIONARY.md for every field. Slugs must match db/02-taxonomy.sql — GET /api/taxonomy lists them all.",
+  "organisations": [
+    { "slug": "chambers-example", "name": "Chambers of …", "type": "chamber",
+      "head_person": "example-advocate", "city": "New Delhi", "state": "Delhi", "size_band": "2-5" }
+  ],
+  "people": [
+    {
+      "slug": "example-advocate",
+      "full_name": "…",
+      "honorific": "Mr.",
+      "designation": "advocate",
+      "bar_council": "bcd",
+      "enrolment_number": "D/0000/2010",
+      "enrolment_year": 2010,
+      "first_year_of_practice": 2010,
+      "primary_court": "delhi-hc",
+      "primary_organisation": "chambers-example",
+      "base_city": "New Delhi",
+      "base_state": "Delhi",
+      "headline": "One line, shown on result cards",
+      "short_bio": "…",
+      "accepts_interns": true,
+      "intern_intake_note": "When and how to apply.",
+      "accepts_direct_briefs": true,
+      "fee_band": "mid",
+      "verification_status": "source_backed",
+      "practice_areas": [{ "slug": "civil-litigation", "emphasis": "primary" }],
+      "courts": [{ "slug": "delhi-hc", "frequency": "primary", "since_year": 2010 }],
+      "languages": [{ "code": "en", "proficiency": "fluent" }],
+      "education": [{ "institution": "faculty-of-law-du", "degree": "LL.B.", "end_year": 2010 }],
+      "affiliations": [{ "organisation": "chambers-example", "role": "head_of_chambers", "start_year": 2016, "is_current": true }],
+      "contacts": [{ "kind": "chambers_address", "value": "…", "is_public": true }],
+      "sources": [{ "kind": "firm_website", "title": "…", "url": "https://…", "retrieved_at": "2026-07-28" }]
+    }
+  ],
+  "relationships": [
+    { "from": "example-advocate", "to": "some-senior-advocate", "type": "former_chamber_junior_of",
+      "organisation": "chambers-example", "start_year": 2010, "end_year": 2016, "strength": 4, "verified": true }
+  ],
+  "matters": []
+}

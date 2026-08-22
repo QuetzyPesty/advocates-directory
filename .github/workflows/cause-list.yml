@@ -1,0 +1,85 @@
+# Collect the Supreme Court's daily cause list, every sitting day.
+#
+# The point is accumulation. One day tells you who was listed once; a term's
+# worth tells you which Benches an advocate actually appears before and who they
+# keep appearing alongside. Each run appends one compressed file and rewrites
+# the derived overlay from the whole archive.
+#
+# Manual run:  Actions -> "Daily cause list" -> Run workflow (optionally a date)
+name: Daily cause list
+
+on:
+  schedule:
+    # 03:30 UTC = 09:00 IST, Monday to Friday. The Court publishes the day's
+    # list the previous evening and sits at 10:30, so this reads a settled list
+    # before the day starts. Cron here is UTC and GitHub does not observe IST.
+    - cron: '30 3 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      date:
+        description: 'Specific date to fetch (YYYY-MM-DD). Blank = the latest published list.'
+        required: false
+        type: string
+
+# Least privilege: this job writes data files back to the branch and does
+# nothing else.
+permissions:
+  contents: write
+
+concurrency:
+  group: cause-list
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # node:sqlite needs 22.5+. There is nothing to install — the project
+          # has no dependencies, so there is no cache and no npm ci step.
+          node-version: '22'
+
+      - name: Fetch and parse the cause list
+        id: scrape
+        run: |
+          if [ -n "${{ inputs.date }}" ]; then
+            node scripts/scrape-cause-list.js --date='${{ inputs.date }}' | tee scrape.log
+          else
+            node scripts/scrape-cause-list.js | tee scrape.log
+          fi
+
+      - name: Rebuild the derived overlay from every day collected so far
+        run: node scripts/derive-cause-lists.js | tee derive.log
+
+      - name: Check the database still builds with the new data
+        run: node scripts/build-db.js > /dev/null && echo "build OK"
+
+      - name: Commit
+        run: |
+          git config user.name  'cause-list bot'
+          git config user.email 'noreply@github.com'
+          git add data/cause-lists data/cause-list-derived.json
+          # A non-sitting day, or a re-run of a day already collected, produces
+          # no change. That is a normal outcome, not a failure.
+          if git diff --cached --quiet; then
+            echo "No new cause-list data — nothing to commit."
+            exit 0
+          fi
+          git commit -m "cause list: $(node -e "
+            const fs=require('fs');
+            const f=fs.readdirSync('data/cause-lists').filter(x=>x.endsWith('.gz')).sort();
+            process.stdout.write(f[f.length-1].replace('.jsonl.gz','')+' ('+f.length+' days collected)');
+          ")"
+          git push
+
+      - name: Summary
+        if: always()
+        run: |
+          { echo '## Cause list'; echo '```'; cat scrape.log 2>/dev/null || echo 'no scrape output';
+            echo '```'; echo '## Derived'; echo '```'; cat derive.log 2>/dev/null || echo 'no derive output';
+            echo '```'; } >> "$GITHUB_STEP_SUMMARY"

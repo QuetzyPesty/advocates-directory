@@ -1,0 +1,51 @@
+# Refresh the Supreme Court's roll of Advocates-on-Record.
+#
+# The roll is the spine everything else joins to: the cause-list scraper matches
+# the names it reads against it, so a stale roll quietly lowers the match rate
+# rather than failing. Monthly is enough — the Registry reissues the list every
+# few weeks, and the URL carries its date, so the converter rediscovers it.
+name: AoR roll
+
+on:
+  schedule:
+    - cron: '0 4 1 * *'      # 04:00 UTC on the 1st of each month
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aor-roll
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch and convert the roll
+        run: node scripts/convert-aor-list.js | tee aor.log
+
+      - name: Check the database still builds
+        run: node scripts/build-db.js > /dev/null && echo "build OK"
+
+      - name: Commit
+        run: |
+          git config user.name  'aor-roll bot'
+          git config user.email 'noreply@github.com'
+          git add data/aor-list.json
+          if git diff --cached --quiet; then
+            echo "Roll unchanged since the last run."
+            exit 0
+          fi
+          git commit -m "aor roll: refresh from the Registry's current list"
+          git push
+
+      - name: Summary
+        if: always()
+        run: { echo '```'; cat aor.log 2>/dev/null; echo '```'; } >> "$GITHUB_STEP_SUMMARY"

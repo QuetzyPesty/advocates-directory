@@ -1,0 +1,16 @@
+# Rebuilt from data/ by `npm run build` — never a source of truth.
+db/directory.sqlite
+db/directory.sqlite-journal
+db/directory.sqlite-wal
+db/directory.sqlite-shm
+
+# Generated artefacts.
+dist/
+
+# Source PDFs, kept only for spot-checking a parse. Large, and re-fetchable
+# from the URL recorded in each dataset's _note.
+db/sources/
+
+node_modules/
+.DS_Store
+*.log
