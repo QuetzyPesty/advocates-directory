@@ -48,15 +48,27 @@ test('every browse dimension opens and lists values', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test('a filtered list and a profile render', async ({ page }) => {
+test('a profile renders the person and their firm', async ({ page }) => {
   await page.goto('/index.html');
-  const slug = await page.evaluate(() => {
+  const who = await page.evaluate(() => {
     const d = JSON.parse(document.getElementById('dataset').textContent);
-    return d.people.find(p => p.affiliations?.length)?.slug;
+    const p = d.people.find(x => x.affiliations?.length);
+    return { slug: p.slug, name: p.name, firm: p.affiliations[0].name };
   });
-  await page.goto(`/index.html#/person/${slug}`);
-  await expect(page.locator('#app')).toContainText(/Network/i);
-  await expect(page.locator('#app h1, #app h2').first()).not.toBeEmpty();
+  await page.goto(`/index.html#/person/${who.slug}`);
+  // Not "Network": that link only exists for someone with relationships, and
+  // since co-appearance edges need two shared matters most partners have none.
+  await expect(page.locator('#app')).toContainText(who.name);
+  await expect(page.locator('#app')).toContainText(who.firm);
+});
+
+test('the firm browse dimension filters the list', async ({ page }) => {
+  await page.goto('/index.html#/browse/chamber');
+  const firm = await page.evaluate(() =>
+    document.querySelector('a[href^="#/list?chamber="]')?.getAttribute('href'));
+  expect(firm).toBeTruthy();
+  await page.goto('/index.html' + firm);
+  await expect(page.locator('a[href^="#/person/"]').first()).toBeVisible();
 });
 
 test('the force layout keeps running after the profile re-renders the DOM', async ({ page }) => {
