@@ -118,7 +118,12 @@ if (fs.existsSync(dataDir)) {
   for (const f of fs.readdirSync(dataDir)) {
     if (!f.endsWith('.json') || f === path.basename(OUT) || f === 'import-template.json') continue;
     try {
-      for (const p of JSON.parse(fs.readFileSync(path.join(dataDir, f), 'utf8')).people || []) {
+      const parsed = JSON.parse(fs.readFileSync(path.join(dataDir, f), 'utf8'));
+      // A merge overlay does not own an identity — its slugs are borrowed from
+      // whichever dataset does. Treating one as a claim reports a collision
+      // against a file that never named the person.
+      if (parsed._merge === true) continue;
+      for (const p of parsed.people || []) {
         if (p.slug) claimed.set(p.slug, f);
       }
     } catch { /* not an import file; ignore */ }

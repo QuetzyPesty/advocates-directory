@@ -17,7 +17,7 @@ no false positives across five test articles.
 | id | goal | status | verification | commit |
 |----|------|--------|--------------|--------|
 | T1 | Merge the 100 unaffiliated twin rows, in `build_directory.py` so a rebuild keeps it | todo | `python3 build_directory.py && sqlite3 legal_directory.db "SELECT COUNT(*) FROM people p WHERE p.firm_id IS NULL AND EXISTS(SELECT 1 FROM people q WHERE q.name=p.name AND q.firm_id IS NOT NULL)"` → 0 | |
-| T2 | Refresh B from the rebuilt upstream | todo | `npm run build` in B, person count rises from 4,547 | |
+| T2 | Refresh B from the rebuilt upstream | **done** — 4,547 → 5,379 people, 1,272 partners (was 433), 118 orgs, 496 matters | `npm run build` in B | |
 | T3 | Scraper: topic∩body firm extraction, headline fallback, no firm inheritance | todo | fixture tests pass; 0 of 162 deals with empty `law_firms` where the article names a firm | |
 | T4 | Re-parse all 515 deals | todo | `people with firm=None` drops from 173 toward ~0 | |
 | T5 | Rebuild + refresh B again + export + Playwright smoke | todo | `npm test` in B exits 0 | |
@@ -34,3 +34,8 @@ no false positives across five test articles.
 - `person_firm_id = ... else primary_firm_id` (build_directory.py ~489) assigns
   the deal's *first* firm to anyone without one — same misattribution class as
   the TT&A bug, in a different place.
+- **Open question for the owner:** the refresh took relationships from 3,446 to
+  10,967, and 91% of the firm-derived edges come from a *single* shared deal.
+  The shareable export went 2 MB → 5.7 MB. `derive-cause-lists.js` already
+  thresholds at 3+ shared matters for exactly this reason; `convert-firm-db.js`
+  has no threshold. Raised in the report, not changed unilaterally.
