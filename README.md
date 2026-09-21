@@ -19,22 +19,24 @@ private notes and must not be reachable from the network.
 `npm run build` is destructive — it recreates `db/directory.sqlite` from
 `db/*.sql` and reloads every dataset in `data/`.
 
-A full local build holds **4,547 people**; a clone of this repository builds
-**4,500**, because two datasets are deliberately not published.
+A full local build holds **5,408 people**; a clone of this repository builds
+**5,361**, because two datasets are deliberately not published.
 
 | Source | People | Standing | In the repo |
 |---|---|---|---|
 | Supreme Court roll of Advocates-on-Record | 4,012 | `bar_verified` — the Registry's own list | yes, without contact details |
-| Law firm partners from the deal-coverage database | 433 | `source_backed` — each cites the Bar & Bench reports naming them | yes |
+| Law firm partners from the deal-coverage database | 1,300 | `source_backed` — each cites the Bar & Bench reports naming them | yes |
 | Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` | yes |
 | NLS alumni list | 47 | `unverified` — a personal list, not a checked source | **no** — `data/private/` |
 
-Plus 48 firms and chambers, 146 reported transactions, and 3,446 relationships —
-of which 47 come from the daily cause lists and grow every sitting day.
+Plus 136 firms and chambers, 495 reported transactions (91 with a stated deal
+size), and 4,301 relationships — of which **3,235 come from the daily cause
+lists** and grow every sitting day. That number was 47 after four days of
+collection and 3,235 after sixteen; it is the part of this that compounds.
 
 Most of the roll is a name, a registration year and a cause-list code: the spine
 everything else joins onto, not a profile. `npm run export -- --substantive`
-leaves those out, which is what makes a shareable file 2 MB rather than 7.
+leaves those out, which is what makes a shareable file 4.6 MB rather than 9.7.
 
 ## Private by design
 
@@ -380,7 +382,7 @@ Notes are never included in API output.
 npm run export
 ```
 
-Produces **`dist/index.html`: one self-contained file**, ~2 MB, no dependencies
+Produces **`dist/index.html`: one self-contained file**, ~4.6 MB, no dependencies
 and no network requests. Browse, facets, search, profiles and the relationship
 graph all run client-side. Open it with `file://`, email it, or drop it on any
 static host.
@@ -493,3 +495,24 @@ their own words and having software decide what kind of case it is. Reasoning in
 Modelled for India — Advocates, Senior Advocates, Advocates-on-Record, State Bar
 Council enrolment, chamber juniors, High Court benches, tribunals. The schema is
 jurisdiction-neutral; the vocabulary lives entirely in `db/02-taxonomy.sql`.
+
+## Tests
+
+```bash
+npm test          # Playwright, against the built dist/index.html
+npm run test:headed
+```
+
+`npm run export` first — the suite drives the artefact that actually gets
+shared, served over HTTP rather than `file://`, and asserts on the DOM and the
+embedded payload rather than on pixels. It covers zero console errors, every
+browse dimension, profile and list routes, hash routing across a reload, that
+the payload carries no private notes or contact details, and that the force
+layout is still animating after a view has rebuilt `#app` with `innerHTML` —
+the failure mode where the page looks correct and is quietly frozen.
+
+The scraper has its own offline fixtures in the Deals-Tracker repository:
+
+```bash
+python3 tests/test_firm_extraction.py
+```
