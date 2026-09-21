@@ -18,6 +18,11 @@
     "convert:aor": "node scripts/convert-aor-list.js",
     "scrape:causelist": "node scripts/scrape-cause-list.js",
     "derive:causelist": "node scripts/derive-cause-lists.js",
-    "export": "node scripts/export-static.js"
+    "export": "node scripts/export-static.js",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
   }
 }

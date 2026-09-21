@@ -437,8 +437,14 @@ export function profilePage(p) {
           ${relBlock('education')}
           ${relBlock('court')}` : '', 'relationships')}
 
-        ${section('Reported matters', p.matters.length ? `<ul class="matters">${p.matters.map(m => `
+        ${section('Reported matters', p.matters.length ? `<ul class="matters">${
+          // Biggest first where a value is known; the rest keep their own order
+          // below. A missing value means the report did not state one, which is
+          // most of them — it is not a zero and must not sort like one.
+          [...p.matters].sort((a, b) => (b.value_inr ?? -1) - (a.value_inr ?? -1)).map(m => `
           <li><strong>${esc(m.title)}</strong>${m.citation ? ` <span class="cite">${esc(m.citation)}</span>` : ''}
+            ${m.value_raw ? `<span class="deal-value"${m.value_inr ? ` title="≈ ₹${Math.round(m.value_inr / 1e7).toLocaleString('en-IN')} crore, for ordering only"` : ''}>${
+              m.value_approx ? '~' : ''}${esc(m.value_raw)}</span>` : ''}
             <p class="meta">${[m.court_short || m.court_name, m.year, m.role?.replace(/_/g, ' '), m.side, m.outcome]
               .filter(Boolean).map(esc).join(' · ')}</p></li>`).join('')}</ul>` : '')}
 

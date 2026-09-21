@@ -486,3 +486,17 @@ button.linkish.danger:hover { color: #c0392b; }
                        border-radius: 5px; background: var(--panel); color: var(--ink); font: inherit; }
 .inline-search button { padding: 0.45rem 0.9rem; border: 1px solid var(--line); border-radius: 5px;
                         background: var(--panel); color: var(--ink); cursor: pointer; font: inherit; }
+
+/* Reported deal size. Sits next to the matter title, quiet by default —
+   it is a fact about the transaction, not a score for the lawyer. */
+.matters .deal-value {
+  display: inline-block;
+  margin-left: .5rem;
+  padding: .05rem .4rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: .8em;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+  white-space: nowrap;
+}

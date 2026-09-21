@@ -383,8 +383,19 @@ CREATE TABLE matter (
   practice_area_id INTEGER REFERENCES practice_area(id),
   outcome          TEXT,
   summary          TEXT,
-  url              TEXT
+  url              TEXT,
+  -- Reported value. `value_amount` is in base units of `value_currency`
+  -- (rupees, dollars); `value_inr` is the same figure at a fixed dated rate and
+  -- exists ONLY so deals in different currencies can be ordered and
+  -- range-filtered together. Show `value_raw` — never the converted figure.
+  value_raw        TEXT,
+  value_currency   TEXT,
+  value_amount     INTEGER,
+  value_inr        INTEGER,
+  value_approx     INTEGER NOT NULL DEFAULT 0 CHECK (value_approx IN (0,1))
 );
+
+CREATE INDEX idx_matter_value ON matter(value_inr DESC);
 
 CREATE TABLE person_matter (
   person_id INTEGER NOT NULL REFERENCES person(id) ON DELETE CASCADE,

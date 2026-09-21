@@ -293,11 +293,14 @@ function importMatter(m) {
   const existing = one(`SELECT id FROM matter WHERE title = ? AND IFNULL(year,0) = IFNULL(?,0)`, [m.title, m.year ?? null]);
   let matterId = existing?.id;
   if (!matterId) {
-    const res = run(`INSERT INTO matter (title, citation, court_id, year, practice_area_id, outcome, summary, url)
-                     VALUES (?,?,?,?,?,?,?,?)`,
+    const v = m.value || {};
+    const res = run(`INSERT INTO matter (title, citation, court_id, year, practice_area_id, outcome, summary, url,
+                                         value_raw, value_currency, value_amount, value_inr, value_approx)
+                     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
       [m.title, m.citation ?? null, m.court ? idBySlug('court', m.court) : null, m.year ?? null,
        m.practice_area ? idBySlug('practice_area', m.practice_area) : null,
-       m.outcome ?? null, m.summary ?? null, m.url ?? null]);
+       m.outcome ?? null, m.summary ?? null, m.url ?? null,
+       v.raw ?? null, v.currency ?? null, v.amount ?? null, v.amount_inr ?? null, bool(v.approx)]);
     matterId = Number(res.lastInsertRowid);
   }
   run(`DELETE FROM person_matter WHERE matter_id = ?`, [matterId]);

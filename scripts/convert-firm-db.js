@@ -36,6 +36,13 @@ const positional = argv.filter(a => !a.startsWith('--'));
 const SRC = positional[0] || '/Users/anandiyer/structuring mbox/legal_directory.db';
 const OUT = positional[1] || 'data/firm-partners.json';
 const INCLUDE_ASSOCIATES = flag('include-associates');
+// Two partners named on one transaction together is a coincidence of staffing,
+// not a working relationship: 91% of the pairs this produced shared exactly one
+// deal, and they were 10,896 of the 10,967 edges in the directory. Requiring a
+// second shared matter keeps everything that recurs and drops the hairball.
+// derive-cause-lists.js thresholds at 3 for the same reason.
+const MIN_TOGETHER = Number(
+  (argv.find(a => a.startsWith('--min-together=')) || '').split('=')[1] || 2);
 
 const review = [];
 const note = (kind, msg) => review.push(`${kind}: ${msg}`);
@@ -155,7 +162,9 @@ for (const [name, n] of nameCount) {
 
 // --- deals ------------------------------------------------------------------
 
-const dealRows = q(`SELECT id, headline, client, source, url, snippet FROM deals`);
+const dealRows = q(`SELECT id, headline, client, source, url, snippet,
+                           value_raw, value_currency, value_amount, value_inr, value_approx
+                    FROM deals`);
 const dealById = new Map(dealRows.map(d => [d.id, d]));
 
 const dealAreas = new Map();
@@ -296,6 +305,10 @@ for (const d of dealRows) {
       (d.snippet || '').trim().slice(0, 400) || null,
     ].filter(Boolean).join(' '),
     url: d.url || undefined,
+    value: d.value_raw ? {
+      raw: d.value_raw, currency: d.value_currency,
+      amount: d.value_amount, amount_inr: d.value_inr, approx: !!d.value_approx,
+    } : undefined,
     counsel: team.map(t => ({
       person: slugOf.get(t.person_id),
       role: 'arguing_counsel',
@@ -324,7 +337,9 @@ for (const [dealId, team] of dealTeam) {
 }
 
 const relationships = [];
+let thinPairs = 0;
 for (const [key, n] of pairCount) {
+  if (n < MIN_TOGETHER) { thinPairs++; continue; }
   const [a, b] = key.split('|').map(Number);
   const sameFirm = firmOf.get(a) && firmOf.get(a) === firmOf.get(b);
   relationships.push({
@@ -337,7 +352,11 @@ for (const [key, n] of pairCount) {
     note: `Named together on ${n} reported ${n === 1 ? 'transaction' : 'transactions'}.`,
   });
 }
-note('derived edges', `${relationships.length} relationships inferred from shared deal teams alone. They record co-appearance, not seniority — no chamber or mentorship edge is claimed.`);
+note('derived edges', `${relationships.length} relationships inferred from shared deal teams alone. They record ` +
+  `co-appearance, not seniority — no chamber or mentorship edge is claimed.`);
+note('single-matter pairs dropped', `${thinPairs} pairs appeared together on fewer than ${MIN_TOGETHER} matters and ` +
+  `were not written. One shared transaction is a staffing coincidence; it says nothing about who works with whom. ` +
+  `Pass --min-together=1 to keep them.`);
 
 // --- organisations ----------------------------------------------------------
 
