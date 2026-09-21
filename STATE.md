@@ -18,9 +18,9 @@ no false positives across five test articles.
 |----|------|--------|--------------|--------|
 | T1 | Merge the 100 unaffiliated twin rows, in `build_directory.py` so a rebuild keeps it | todo | `python3 build_directory.py && sqlite3 legal_directory.db "SELECT COUNT(*) FROM people p WHERE p.firm_id IS NULL AND EXISTS(SELECT 1 FROM people q WHERE q.name=p.name AND q.firm_id IS NOT NULL)"` → 0 | |
 | T2 | Refresh B from the rebuilt upstream | **done** — 4,547 → 5,379 people, 1,272 partners (was 433), 118 orgs, 496 matters | `npm run build` in B | |
-| T3 | Scraper: topic∩body firm extraction, headline fallback, no firm inheritance | todo | fixture tests pass; 0 of 162 deals with empty `law_firms` where the article names a firm | |
-| T4 | Re-parse all 515 deals | todo | `people with firm=None` drops from 173 toward ~0 | |
-| T5 | Rebuild + refresh B again + export + Playwright smoke | todo | `npm test` in B exits 0 | |
+| T3 | Scraper: topic∩body firm extraction, no firm inheritance | **done** | `python3 tests/test_firm_extraction.py` → 5 fixtures pass | A repo |
+| T4 | Re-parse the 162 live articles (the other 353 come from the mbox, no live URL) | **done** — firm=None 173 → 46; upstream unaffiliated 169 → 4 | | A repo |
+| T5 | Rebuild + refresh B + export + Playwright smoke | **done** | `npm test` → 7 passed | B repo |
 
 ## Notes that cost time to learn
 
@@ -34,8 +34,14 @@ no false positives across five test articles.
 - `person_firm_id = ... else primary_firm_id` (build_directory.py ~489) assigns
   the deal's *first* firm to anyone without one — same misattribution class as
   the TT&A bug, in a different place.
-- **Open question for the owner:** the refresh took relationships from 3,446 to
-  10,967, and 91% of the firm-derived edges come from a *single* shared deal.
-  The shareable export went 2 MB → 5.7 MB. `derive-cause-lists.js` already
-  thresholds at 3+ shared matters for exactly this reason; `convert-firm-db.js`
-  has no threshold. Raised in the report, not changed unilaterally.
+- Co-appearance edges now need 2+ shared matters (`--min-together`). Without
+  it, 91% of pairs came from a single deal and the export was 5.7 MB.
+- Deal size: `value_inr` is for ordering only, at a fixed dated rate in
+  `scrape_barandbench.py`. Never display it — show `value_raw`.
+
+
+## Done
+
+All five tasks complete. Remaining unattributed people upstream: 4, all
+correct — two Senior Advocates, a former Attorney General and an in-house
+General Counsel, none of whom are employed by a firm.

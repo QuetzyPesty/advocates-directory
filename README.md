@@ -109,10 +109,20 @@ managing partners, equity partners, counsel and practice heads. It writes:
 - **Firms** as `law_firm` organisations, with the affiliation role mapped onto
   the schema's enum (`Senior Partner` → `partner`, `Partner, Head Competition` →
   `partner` with the full title kept in the affiliation note)
-- **Matters** — 146 reported transactions with client, deal type, summary and URL
+- **Matters** — 495 reported transactions with client, deal type, summary, URL
+  and, where the report states one, the **deal size**
 - **Relationships** derived only from having acted on the same transaction:
   `colleague_of` within a firm, `co_counsel_with` across firms, strength scaled
-  by how many matters the pair shares
+  by how many matters the pair shares. A pair needs **two** shared matters —
+  one is a coincidence of staffing, and single-deal pairs were 91% of the edges
+  and most of the file size. `--min-together=1` restores them.
+
+**Deal size.** Where a report states a figure it is stored as the raw string,
+the currency, and the amount in that currency's base units, plus an `approx`
+flag for shapes like `₹400 crore+`. A separate `value_inr` converts at a fixed,
+dated rate so deals in different currencies can be ordered against each other —
+it exists for sorting and range filters only, and the figure shown to a reader
+is always the original. 91 of 495 matters carry one.
 
 What it refuses to do:
 
