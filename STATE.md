@@ -2,7 +2,7 @@
 
 Cross-repo. Resume by reading this, then `git log --oneline -10` in both repos.
 
-- **A** = `~/structuring mbox` → [QuetzyPesty/Deals-Tracker](https://github.com/QuetzyPesty/Deals-Tracker) (scraper + upstream DB)
+- **A** = the deal-coverage scraper checkout → [QuetzyPesty/Deals-Tracker](https://github.com/QuetzyPesty/Deals-Tracker) (scraper + upstream DB)
 - **B** = `~/lawyer screener and directory` → [QuetzyPesty/advocates-directory](https://github.com/QuetzyPesty/advocates-directory)
 
 ## Background

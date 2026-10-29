@@ -33,7 +33,7 @@ const argv = process.argv.slice(2);
 const flag = n => argv.includes(`--${n}`);
 const positional = argv.filter(a => !a.startsWith('--'));
 
-const SRC = positional[0] || '/Users/anandiyer/structuring mbox/legal_directory.db';
+const SRC = positional[0] || 'legal_directory.db';
 const OUT = positional[1] || 'data/firm-partners.json';
 const INCLUDE_ASSOCIATES = flag('include-associates');
 // Two partners named on one transaction together is a coincidence of staffing,

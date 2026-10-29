@@ -31,7 +31,7 @@ db.close();
 
 if (!empty) {
   // Datasets live in data/. data/private/ holds the ones that are deliberately
-  // not committed — contact details off the AoR roll, the personal alumni list
+  // not committed — contact details off the AoR roll, other local-only lists
   // — so that a public repository does not republish them. Their absence in a
   // clone is normal, not an error.
   const dir = path.join(ROOT, 'data');

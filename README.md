@@ -1,7 +1,7 @@
-# Advocates — a private directory and screener
+# Advocates — a directory and screener
 
-A personal, structured record of the Bar: who practises what, where they appear,
-how they are connected to each other, and what I know about them.
+A structured record of the Bar: who practises what, where they appear, and how
+they are connected to each other.
 
 This is **Phase 1**. The phased plan is in [ROADMAP.md](ROADMAP.md).
 
@@ -27,7 +27,7 @@ A full local build holds **5,408 people**; a clone of this repository builds
 | Supreme Court roll of Advocates-on-Record | 4,012 | `bar_verified` — the Registry's own list | yes, without contact details |
 | Law firm partners from the deal-coverage database | 1,300 | `source_backed` — each cites the Bar & Bench reports naming them | yes |
 | Supreme Court advocates researched from public sources | 55 | `source_backed` — `sc-advocates.json` and `sc-advocates-batch2.json` | yes |
-| NLS alumni list | 47 | `unverified` — a personal list, not a checked source | **no** — `data/private/` |
+| Locally supplied lists | 47 | `unverified` — not a checked source | **no** — `data/private/` |
 
 Plus 136 firms and chambers, 495 reported transactions (91 with a stated deal
 size), and 4,301 relationships — of which **3,235 come from the daily cause
@@ -53,16 +53,15 @@ directory. Notes can be unreserved because nobody else can read them:
 That separation is what lets this become something shareable in Phase 3 without
 anything having to be untangled first.
 
-## Loading the NLS alumni list
+## Loading a local-only list
 
-This one is **local-only**: it is a private list of named people who did not put
-themselves in a public directory, so both the RTF and everything derived from it
-live under `data/private/` and are excluded by `.gitignore`. A clone of this
-repository has neither.
+Lists of named people who did not put themselves in a public directory stay
+under `data/private/`, which `.gitignore` excludes. A clone of this repository
+has none of them and builds fine without.
 
 ```bash
-npm run convert:nls -- "data/private/NLS Alum list.rtf" data/private/nls-alumni.json
-npm run import -- data/private/nls-alumni.json
+npm run convert:nls -- "data/private/<list>.rtf" data/private/<list>.json
+npm run import -- data/private/<list>.json
 ```
 
 `scripts/convert-nls-rtf.js` parses the RTF itself (no `textutil`, no
@@ -94,7 +93,7 @@ trusting the import.
 ## Loading the firm-partner database
 
 ```bash
-npm run convert:firms -- "/Users/anandiyer/structuring mbox/legal_directory.db" data/firm-partners.json
+npm run convert:firms -- path/to/legal_directory.db data/firm-partners.json
 npm run import -- data/firm-partners.json
 ```
 
@@ -189,7 +188,7 @@ overlay that `.gitignore` excludes. A local build imports them and they are
 there when you need them; a public clone has none of them. `--inline-contacts`
 restores the old behaviour if you would rather keep everything in one file.
 
-The same applies to the NLS alumni list — see above.
+The same applies to any local-only list — see above.
 
 Load order follows what a file **is**, not where it sits: a dataset owns the
 people it names and replaces their child rows, an overlay carries a fragment and
@@ -358,8 +357,8 @@ returns the juniors, and the juniors' juniors.
 | NLS alumni in Delhi | `/directory?institutions=nls-bengaluru&city=New+Delhi` |
 | Who came out of a chamber | `/directory?chamber_lineage_of=<slug>` |
 | Anyone with a family tie recorded | `/directory?relationship_categories=family` |
-| Who I have notes on, most-noted first | `/screener?has_notes=true&sort=notes_desc` |
-| Records I still need to fill in | `/directory?missing=practice_areas` |
+| Records with notes, most-noted first | `/screener?has_notes=true&sort=notes_desc` |
+| Records still to fill in | `/directory?missing=practice_areas` |
 | Within two degrees of someone | `/directory?connected_to=<slug>&connection_depth=2` |
 
 ## JSON
@@ -446,8 +445,8 @@ data/cause-list-derived.json
                         archive on every run. A merge overlay, not a record
                         of truth — regenerate rather than edit.
 data/private/           Local-only, excluded by .gitignore: contact details off
-                        the AoR roll, the NLS alumni list and the RTF it came
-                        from. A clone builds fine without them.
+                        the AoR roll, other local-only lists and their source
+                        files. A clone builds fine without them.
 data/sc-advocates.json  25 Supreme Court advocates, researched from public
 data/sc-advocates-batch2.json
                         sources; every record cites at least one URL. Batch 2
@@ -455,7 +454,7 @@ data/sc-advocates-batch2.json
                         that link them to batch 1.
 scripts/build-db.js         Rebuild from scratch.
 scripts/import-json.js      Idempotent bulk import, upserting on slug.
-scripts/convert-nls-rtf.js  RTF alumni list -> import JSON, with a review log.
+scripts/convert-nls-rtf.js  RTF list -> import JSON, with a review log.
 scripts/convert-firm-db.js  Deal-coverage SQLite -> import JSON (partner level).
 scripts/convert-aor-list.js Supreme Court AoR roll (PDF) -> import JSON.
 scripts/scrape-cause-list.js  Daily cause lists -> one JSONL file per day.
@@ -481,7 +480,7 @@ compose in one query builder.
 **Provenance is not a later feature.** `source` and `source_link` exist from day
 one, the importer attaches a source to every record it writes, and
 `verification_status` moves through `unverified → source_backed → self_claimed →
-bar_verified`. The NLS import lands at `unverified` on purpose.
+bar_verified`. A local-list import lands at `unverified` on purpose.
 
 **No plain-language intake.** Phase 4 lets litigants navigate the taxonomy
 directly with definitions attached, rather than describing their problem in

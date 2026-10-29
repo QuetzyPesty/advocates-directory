@@ -38,7 +38,7 @@ ${head}
 </header>
 <div class="private-banner">
   <strong>Private working copy.</strong> Notes are yours alone and are excluded from every export.
-  Records marked <em>unverified</em> came from a personal list, not a checked source.
+  Records marked <em>unverified</em> came from an unchecked source.
 </div>
 <main>${body}</main>
 <footer>

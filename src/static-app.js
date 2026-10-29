@@ -17,7 +17,7 @@
     academic: 'Academic', in_house_counsel: 'In-house Counsel', other: 'Other',
   };
   const VERIF = {
-    unverified: ['Unverified', 'v-none', 'From a personal list, not a checked source.'],
+    unverified: ['Unverified', 'v-none', 'From an unchecked source.'],
     source_backed: ['Source-backed', 'v-source', 'Entered from a cited public source.'],
     self_claimed: ['Self-claimed', 'v-claim', 'Confirmed by the advocate.'],
     bar_verified: ['Bar-verified', 'v-bar', 'Checked against Bar Council records.'],
@@ -163,7 +163,7 @@
     <div class="private-banner">
       Read-only snapshot of ${m.counts.people} records, generated ${esc(m.generated)}.
       ${m.includes_notes ? '<strong>Includes private notes.</strong>' : 'Private notes are not included.'}
-      Records marked <em>unverified</em> come from a personal list, not a checked source.
+      Records marked <em>unverified</em> come from an unchecked source.
     </div>
     <main>${body}</main>
     <footer><p>Static export — everything runs in your browser, nothing is sent anywhere.</p></footer>`;
